@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         Categoria::factory(3)
-            ->has(Subcategoria::factory()->count(6))
+            ->has(Subcategoria::factory()->count(20))
             ->create();
 
 

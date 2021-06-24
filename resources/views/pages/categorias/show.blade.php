@@ -9,7 +9,7 @@
                 <i class="fas fa-plus"></i> <span>Nova subcategoria</span>
             </button>
         </section>
-        @if(count($categoria->subcategorias) > 0)
+        @if(count($subcategorias) > 0)
             <div class="table-responsive">
                 <table  class="table table-hover table-sm">
                     <thead>
@@ -20,7 +20,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($categoria->subcategorias as $subcategoria)
+                        @foreach($subcategorias as $subcategoria)
                         <tr>
                             <td>{{$subcategoria->nome}}</td>
                             <td>{{$subcategoria->descricao}}</td>
@@ -30,7 +30,7 @@
                                         type="button"
                                         class="btn btn-warning"
                                         title="Alterar"
-                                        onclick="alterarSubcategoria({{$subcategoria}}, {{$categoria}})"
+                                        onclick="alterarSubcategoria({{$subcategoria}})"
                                     >
                                         <i class="far fa-edit"></i>
                                     </button>
@@ -38,7 +38,7 @@
                                         type="button"
                                         class="btn btn-danger"
                                         title="Excluir"
-                                        onclick="excluirItem('/categorias',{{$subcategoria}})"
+                                        onclick="excluirItem('/subcategorias',{{$subcategoria}})"
                                     >
                                         <i class="far fa-trash-alt"></i>
                                     </button>
@@ -50,6 +50,13 @@
                 </table>
             </div>
         @endif
+
+        @include('components.pagination', [
+            'anterior' => $subcategorias->previousPageUrl(),
+            'atual' => url()->current(),
+            'proxima' => $subcategorias->nextPageUrl(),
+            'pagina_atual' => $subcategorias->currentPage()
+        ])
     </div>
 
     @include('pages.subcategorias.modal', [
@@ -92,7 +99,7 @@
         $('#subcategoria-label').text(`Alterar ${subcategoria.nome}`);
         $('#nome').val(subcategoria.nome);
         $('#descricao').val(subcategoria.descricao);
-        $('#categoria_id').val(categoria.id).change();
+        $('#categoria_id').val(subcategoria.categoria_id).change();
         $('#submit').attr('onclick', enviarFormulario('put', `/subcategorias/${subcategoria.id}`, 'subcategoria-form'));
         abrirModal();
     }
@@ -104,43 +111,7 @@
 
 
     $(function() {
-        let subcategoriaCriadaAlert = `
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <strong>Holy guacamole!</strong>Criada nova subcategoria.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        `;
 
-        let subcategoriaAlteradaAlert = `
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <strong>Holy guacamole!</strong> Alterada subcategoria
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        `;
-        $('#subcategoria-modal').modal({
-            keyboard: false,
-            show: false
-        });
-
-        let subcategoriaCriada = localStorage.getItem('subcategoria-criada');
-        let subcategoriaAlterada = localStorage.getItem('subcategoria-alterada');
-        if(subcategoriaCriada) {
-            $(subcategoriaCriadaAlert).insertBefore( $( "table" ) );
-            localStorage.removeItem('subcategoria-criada');
-        }
-        if(subcategoriaAlterada) {
-            $(subcategoriaAlteradaAlert).insertBefore( $( "table" ) );
-            localStorage.removeItem('subcategoria-alterada');
-        }
-
-        $('#categoria_id').select2({
-            width: '100%',
-            dropdownParent: $('#subcategoria-modal')
-        });
     });
 </script>
 @stop

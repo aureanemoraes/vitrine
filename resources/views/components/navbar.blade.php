@@ -45,6 +45,9 @@
                     <li>
                         <a class="dropdown-item" href="{{ route('empresas_parceiras.index') }}">Empresas Parceiras</a>
                     </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('produtos.index') }}">Produtos</a>
+                    </li>
                     <li><hr class="dropdown-divider" /></li>
                     <li>
                         <a class="dropdown-item" href="#">Something else here</a>

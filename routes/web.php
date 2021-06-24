@@ -3,6 +3,7 @@ use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\DescontosController;
 use App\Http\Controllers\EmpresasParceirasController;
 use App\Http\Controllers\ParcelamentosController;
+use App\Http\Controllers\ProdutosController;
 use App\Http\Controllers\SubcategoriasController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,8 @@ Route::resource('subcategorias', SubcategoriasController::class);
 Route::resource('empresas_parceiras', EmpresasParceirasController::class);
 Route::resource('descontos', DescontosController::class);
 Route::resource('parcelamentos', ParcelamentosController::class);
+Route::resource('produtos', ProdutosController::class);
+
 
 
 

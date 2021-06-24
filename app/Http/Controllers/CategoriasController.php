@@ -27,9 +27,13 @@ class CategoriasController extends Controller
     public function show($id)
     {
         $categorias = Categoria::select('id', 'nome')->get();
-        return view('pages.categorias.show-subcategorias')
+        $categoria = Categoria::findOrFail($id);
+        $subcategorias = $categoria->subcategorias()->paginate();
+
+        return view('pages.categorias.show')
                 ->with([
-                    'categoria' => Categoria::findOrFail($id),
+                    'subcategorias' => $subcategorias,
+                    'categoria' => $categoria,
                     'categorias' => $categorias
                 ]);
     }
