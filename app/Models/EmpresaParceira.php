@@ -6,21 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Categoria extends Model
+class EmpresaParceira extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
+    protected $table = 'empresas_parceiras';
+
     protected $fillable = [
         'id',
         'nome',
-        'descricao'
+        'logo',
+        'descricao',
+        'site'
     ];
-
-    protected $table = 'categorias';
-
-    public function subcategorias()
-    {
-        return $this->hasMany(Subcategoria::class,'categoria_id', 'id');
-    }
 }

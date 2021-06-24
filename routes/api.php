@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('categorias', CategoriasController::class);
-Route::apiResource('subcategorias', SubcategoriasController::class);
+Route::fallback(function(){
+    return response()->json([
+        'message' => 'Recurso não encontrado'], 404);
+});
+
+//Route::apiResource('categorias', CategoriasController::class);
+//Route::apiResource('subcategorias', SubcategoriasController::class);
 
