@@ -19,7 +19,8 @@ class Produto extends Model
         'valor',
         'disponibilidade',
         'imagens',
-        'desconto'
+        'desconto',
+        'relevante'
     ];
 
     protected $casts = [
@@ -27,7 +28,6 @@ class Produto extends Model
     ];
 
     // Criar vários acessors com os valores de parcelamento e descontos
-
     public function descontos() {
         return $this->belongsToMany(Desconto::class);
     }

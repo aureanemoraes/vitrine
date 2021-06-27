@@ -61,6 +61,7 @@ class DbV1 extends Migration
             $table->float('valor')->nullable();
             $table->float('desconto')->nullable();
             $table->tinyInteger('disponibilidade')->default(1);
+            $table->tinyInteger('relevante')->default(0);
             $table->json('imagens')->nullable();
             $table->softDeletes();
             $table->timestamps();

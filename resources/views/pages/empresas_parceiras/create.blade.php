@@ -50,13 +50,11 @@
                         $('.logo-image').append(`<img src="${event.target.result}" alt="pic" style="max-width:80px;max-height: 80px;"/>`);
                     }
                     reader.readAsDataURL(file);
-
                 }
             }
         } else {
             $('#imagem').val(null);
             $('.logo-image').append(`<i class="far fa-image fa-5x"></i>`);
-
         }
     });
 </script>
