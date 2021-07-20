@@ -19,6 +19,10 @@ class Subcategoria extends Model
 
     protected $table = 'subcategorias';
 
+    public static function getSubcategorias() {
+        return Subcategoria::all();
+    }
+
     public function categoria()
     {
         return $this->belongsTo(Categoria::class, 'categoria_id', 'id');

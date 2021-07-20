@@ -1,0 +1,41 @@
+.main {
+    display: grid;
+
+    grid-template-areas:
+    "nav nav nav"
+    "breadcrumb breadcrumb breadcrumb"
+    "side content content"
+    "footer footer footer";
+
+    grid-template-columns: 15rem 1fr 15rem;
+    grid-template-rows: auto 1fr auto;
+    grid-gap: 10px;
+
+    height: 100vh;
+}
+
+header {
+    grid-area: breadcrumb;
+}
+
+nav {
+    grid-area: nav;
+}
+
+main {
+    grid-area: content;
+}
+
+aside {
+    grid-area: side;
+    background:#262626;
+    color: white;
+    border-radius: 0.250rem;
+    padding: 1rem;
+    margin-left: 2rem;
+    font-size: 0.825rem;
+}
+
+footer {
+    grid-area: footer;
+}

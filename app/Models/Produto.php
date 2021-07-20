@@ -20,15 +20,82 @@ class Produto extends Model
         'disponibilidade',
         'imagens',
         'desconto',
-        'relevante'
+        'relevante',
+        'categoria_id',
+        'subcategoria_id',
+        'empresa_parceira_id'
     ];
 
     protected $casts = [
         'imagens' => 'array',
+        'disponibilidade' => 'boolean',
+
     ];
 
-    // Criar vários acessors com os valores de parcelamento e descontos
+    protected $appends = [
+        'valor_com_desconto',
+        'valor_com_desconto_formatado',
+        'valor_formatado'
+    ];
+
+    // Accessors e Mutators
+    public function getValorComDescontoAttribute() {
+        $desconto = $this->attributes['desconto'];
+        $preco = $this->attributes['valor'];
+
+        if(isset($desconto)) {
+            $valor = $preco - ($preco * ($desconto/100));
+            return $valor;
+        }
+    }
+
+    public function getValorComDescontoFormatadoAttribute() {
+        $desconto = $this->attributes['desconto'];
+        $preco = $this->attributes['valor'];
+
+        if(isset($desconto)) {
+            $valor = $preco - ($preco * ($desconto/100));
+            return 'R$ ' . number_format($valor, 2, ',', '.');
+        }
+    }
+
+    public function getValorFormatadoAttribute() {
+        $valor = $this->attributes['valor'];
+        return 'R$ ' . number_format($valor, 2, ',', '.');
+    }
+
+    // Métodos
+    public static function possuiParcelamento($valor) {
+        $parcelamentos = Parcelamento::orderBy('valor_minimo', 'asc')->get();
+        if(count($parcelamentos) > 0) {
+            foreach($parcelamentos as $parcelamento) {
+                if($valor > $parcelamento->valor_minimo) {
+                    return true;
+                }
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public static function produtoInfo($produto_id) {
+        return Produto::find($produto_id);
+    }
+
+    // Relacionamentos
     public function descontos() {
         return $this->belongsToMany(Desconto::class);
+    }
+
+    public function categoria() {
+        return $this->belongsTo(Categoria::class);
+    }
+
+    public function subcategoria() {
+        return $this->belongsTo(SubCategoria::class);
+    }
+
+    public function empresa_parceira() {
+        return $this->belongsTo(EmpresaParceira::class);
     }
 }

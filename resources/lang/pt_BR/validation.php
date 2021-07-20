@@ -147,6 +147,8 @@ return [
     */
 
     'attributes' => [
+        'categoria_id' => 'categoria',
+        'subcategoria_id' => 'subcategoria',
         'address'   => 'endereço',
         'age'       => 'idade',
         'body'      => 'conteúdo',

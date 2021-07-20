@@ -19,6 +19,10 @@ class Categoria extends Model
 
     protected $table = 'categorias';
 
+    public static function getCategorias() {
+        return Categoria::all();
+    }
+
     public function subcategorias()
     {
         return $this->hasMany(Subcategoria::class,'categoria_id', 'id');

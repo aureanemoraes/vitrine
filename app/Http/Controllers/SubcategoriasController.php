@@ -60,4 +60,12 @@ class SubcategoriasController extends Controller
 
         return response()->json(['data' => 'Item deleted.'], 200);
     }
+
+    public function find($categoria_id)
+    {
+        return response()->json([
+            'data' => SubCategoria::select('id', 'nome AS text')->where('categoria_id', $categoria_id)->get()
+        ],
+        200);
+    }
 }

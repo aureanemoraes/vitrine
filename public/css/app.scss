@@ -53,6 +53,12 @@
     margin: 0;
     padding: 0;
 }
+.row-images {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    text-align: center;
+}
+
 
 .alert {
     margin: 1rem;
@@ -63,6 +69,34 @@
     padding: 0;
 }
 
+.valor-final {
+    background: green;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 0.250rem;
+}
 
+.forma-pagamento {
+    font-size: 0.625rem;
+    border: 1px solid gray;
+    width: fit-content;
+    padding: 0.250rem;
+    border-radius: 0.250rem;
+    margin-bottom: 0.625rem;
+}
 
+p.forma-pagamento-title {
+    margin: 0 !important;
+    padding: 0;
+}
+
+h4.valor-com-desconto {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+span.valor-sem-desconto {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
 

@@ -62,11 +62,46 @@ class Desconto extends Model
 
                 return $forma_pagamento;
             break;
+            case 7:
+                $forma_pagamento->id = $value;
+                $forma_pagamento->label = 'Acadêmico';
+
+                return $forma_pagamento;
+            break;
         }
     }
 
     public function getPorcentagemLabelAttribute()
     {
         return $this->attributes['porcentagem'] . '%';
+    }
+
+    public static function formas_pagamento()
+    {
+        $array = [
+            [
+                'id' => 1, 'label' => 'Dinheiro', 'desconto' => Desconto::select('porcentagem')->where('forma_pagamento', 1)->first()
+            ],
+            [
+                'id' => 2, 'label' => 'Débito', 'desconto' => Desconto::select('porcentagem')->where('forma_pagamento', 2)->first()
+            ],
+            [
+                'id' => 3, 'label' => 'Crédito', 'desconto' => Desconto::select('porcentagem')->where('forma_pagamento', 3)->first()
+            ],
+            [
+                'id' => 4, 'label' => 'Crédito parcelado', 'desconto' => Desconto::select('porcentagem')->where('forma_pagamento', 4)->first()
+            ],
+            [
+                'id' => 5, 'label' => 'Transferência bancária', 'desconto' => Desconto::select('porcentagem')->where('forma_pagamento', 5)->first()
+            ],
+            [
+                'id' => 6, 'label' => 'Pix', 'desconto' => Desconto::select('porcentagem')->where('forma_pagamento', 6)->first()
+            ],
+            [
+                'id' => 7, 'label' => 'Acadêmico', 'desconto' => Desconto::select('porcentagem')->where('forma_pagamento', 7)->first()
+            ]
+        ];
+        $formas_pagamentos = json_decode(json_encode($array), FALSE);
+        return $formas_pagamentos;
     }
 }

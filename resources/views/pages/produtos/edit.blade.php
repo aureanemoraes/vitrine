@@ -1,19 +1,42 @@
 @extends('layouts.app')
 
-@section('css')
-    <link rel="stylesheet" href="{{ asset('css/app-without-filter.css') }}"/>
-@endsection
-
 @section('content')
     <div class="container">
-        <h3>Novo produto</h3>
-        <form action="{{ route('produtos.store') }}" method="POST" enctype="multipart/form-data" id="produto-form">
+        <h3>Alterar - {{$produto->nome}}</h3>
+        <form action="{{ route('produtos.update', $produto->id) }}" method="POST" enctype="multipart/form-data" id="produto-form">
+            @method('PUT')
             @csrf
             <div class="form-group mb-4">
-                <div class="row row-images">
-                    @for($i=0 ; $i <= 4 ; $i++)
+                <div class="row row-images preview">
+                    @if(isset($produto->imagens))
+                        @foreach($produto->imagens as $imagem)
+                        <div class="text-center">
+                            <img
+                            src="{{ asset('produtos-imagens/' . $imagem) }}"
+                            alt="Imagem produto {{ $produto->nome }}"
+                            style="max-width: 100px;max-height: 100px;"
+                        />
+                        </div>
+                        @endforeach
+                    @endif
+                    @for($i=0 ; $i <= (4 - count($produto->imagens)) ; $i++)
                         <i class="far fa-image fa-5x image-{{$i}}"></i>
                     @endfor
+                </div>
+                <div class="row row-images">
+                    @if(isset($produto->imagens))
+                        @foreach($produto->imagens as $imagem)
+                        <div class="text-center">
+                            <button
+                                type="button"
+                                class="btn btn-danger btn-sm btn-floating"
+                                onclick="excluirImagem('/imagens-produtos', '{{$produto->id}}', '{{$imagem}}')"
+                            >
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </div>
+                        @endforeach
+                    @endif
                 </div>
                 <div class="row">
                     <label class="form-label" for="imagens">Imagens</label>
@@ -35,8 +58,8 @@
                     type="text"
                     id="nome"
                     name="nome"
+                    value="{{$produto->nome}}"
                     class="form-control {{$errors->has('nome') ? 'is-invalid' : ''}}"
-                    value="{{old('nome')}}"
                 />
                 <label class="form-label" for="nome">Nome</label>
 
@@ -53,7 +76,7 @@
                     class="form-control {{$errors->has('descricao') ? 'is-invalid' : ''}}"
                     cols="30"
                     rows="10"
-                >{{old('descricao')}}</textarea>
+                >{{$produto->descricao}}</textarea>
                 <label class="form-label" for="descricao">Descrição</label>
 
                 @if ($errors->has('descricao'))
@@ -66,7 +89,7 @@
                     type="text"
                     id="valor"
                     name="valor"
-                    value="{{old('valor')}}"
+                    value="{{$produto->valor}}"
                     class="form-control numero {{$errors->has('valor') ? 'is-invalid' : ''}}"
                 />
                 <label class="form-label" for="valor">Preço (R$)</label>
@@ -98,88 +121,90 @@
                     aria-label="Default select example"
                     name="subcategoria_id"
                     id="subcategoria_id"
-                    disabled
+
                 >
                     <option value="" disabled selected>Selecione a qual subcategoria pertenço...</option>
                 </select>
                 @if ($errors->has('subcategoria_id'))
                     <div class="invalid-feedback">{{$errors->first('subcategoria_id')}}</div>
-                @endif
-            </div>
-
-            <div class="mb-4">
-                <select
-                    class="form-select {{$errors->has('subcategoria_id') ? 'is-invalid' : ''}}"
-                    aria-label="Default select example"
-                    name="subcategoria_id"
-                    id="subcategoria_id"
-                    disabled
-                >
-                    <option value="" disabled selected>Selecione a qual subcategoria pertenço...</option>
-                </select>
-                @if ($errors->has('subcategoria_id'))
-                    <div class="invalid-feedback">{{$errors->first('subcategoria_id')}}</div>
-                @endif
-            </div>
-
-            <div class="mb-4">
-                <select
-                    class="form-select {{$errors->has('empresa_parceira_id') ? 'is-invalid' : ''}}"
-                    aria-label="Empresa parceira"
-                    name="empresa_parceira_id"
-                    id="empresa_parceira_id"
-
-                >
-                    <option value="" disabled selected>Selecione a qual empresa parceira pertenço...</option>
-                    @foreach($empresas_parceiras as $empresa_parceira)
-                        <option value="{{$empresa_parceira->id}}">{{$empresa_parceira->nome}}</option>
-                    @endforeach
-                </select>
-                @if ($errors->has('empresa_parceira_id'))
-                    <div class="invalid-feedback">{{$errors->first('empresa_parceira_id')}}</div>
                 @endif
             </div>
 
             <section>
                 <h5>Opções</h5>
                 <div class="form-check form-switch mb-4">
-                    <input class="form-check-input" type="checkbox" id="disponibilidade" name="disponibilidade" value="1" checked />
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="disponibilidade"
+                        name="disponibilidade"
+                        value="1"
+                        {{($produto->disponibilidade) ? 'checked' : ''}}
+                    />
                     <label class="form-check-label" for="disponibilidade" name="disponibilidade">
                         Disponível
                     </label>
                 </div>
 
                 <div class="form-check form-switch mb-4">
-                    <input class="form-check-input" type="checkbox" id="relevante" name="relevante" value="1"/>
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="relevante"
+                        name="relevante"
+                        value="1"
+                        {{($produto->relevante) ? 'checked' : ''}}
+                    />
                     <label class="form-check-label" for="relevante" name="relevante">
                         Relevante
                     </label>
                 </div>
 
                 <div class="form-check form-switch mb-4">
-                    <input class="form-check-input" type="checkbox" id="possui-desconto" name="possui-desconto" />
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="possui-desconto"
+                        name="possui-desconto"
+                        {{isset($produto->desconto) ? 'checked' : ''}}
+                    />
                     <label class="form-check-label" for="possui-desconto">
                         Desconto (Individual)
                     </label>
                 </div>
                 <div class="form-outline mb-4">
-                    <input type="text" id="desconto" name="desconto" class="form-control numero" value="{{old('desconto')}}" disabled/>
+                    <input
+                        type="text"
+                        id="desconto"
+                        name="desconto"
+                        value="{{$produto->desconto}}"
+                        class="form-control numero"
+                        {{is_null($produto->desconto) ? 'disabled' : ''}}
+                    />
                     <label class="form-label" for="desconto">Porcentagem (%)</label>
                 </div>
             </section>
             <section>
                 <p>
-                    <strong>Valor final: <span class="valor-final" id="valor-final">R$ 00,00</span></strong>
+                    <strong>
+                        Valor final:
+                        <span class="valor-final" id="valor-final">
+                            {{$produto->valor ? 'R$ ' . number_format($produto->valor, 2, ',', '.') : "R$ 00,00"}}
+                        </span>
+                    </strong>
                 </p>
             </section>
 
             <button type="submit" class="btn btn-primary btn-block">Enviar</button>
         </form>
+        <input type="hidden" id="produto" value="{{$produto}}">
     </div>
 @stop
 
 @section('js')
 <script>
+    let produto = JSON.parse($('#produto').val());
+
     // Funções
     function calcularDesconto(preco_atual, porcentagem_desconto, exibir_preco_id) {
         let porcentagem = porcentagem_desconto / 100;
@@ -191,17 +216,53 @@
             { style: 'currency', currency: 'BRL' }).format(novo_preco)
         );
     }
+
+    function excluirImagem(url, produto_id, nome_imagem) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Excluir',
+            text: `Você realmente deseja essa imagem?`,
+            confirmButtonText: `Sim!`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    method: 'DELETE',
+                    data: {'_token':  "{{ csrf_token() }}" },
+                    url: `${url}/${produto_id}/${nome_imagem}`,
+                    success: function (data) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Item excluído!',
+                            showConfirmButton: false,
+                        });
+                        console.log(data);
+                        return 1;
+                    },
+                    error: function(data) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Item não excluído!',
+                            showConfirmButton: false,
+                        });
+                        return 0;
+                    }
+                });
+            }
+        });
+    }
     // On change
     $('#imagens').change(function(){
-        if(this.files.length > 0 && this.files.length <= 5) {
+        let quantidade_disponivel = 5 - {!! count($produto->imagens) !!};
+        if(this.files.length > 0 && this.files.length <= quantidade_disponivel) {
+            $('.not-uploaded').remove();
             for(let i=0; i<this.files.length; i++) {
                 let file = this.files[i];
                 if (file) {
                     let reader = new FileReader();
                     reader.onload = function(event){
                         $(`.image-${i}`).remove();
-                        $('.row-images').append(`
-                            <img src="${event.target.result}" alt="pic" style="max-width:100px;max-height: 100px;"/>
+                        $('.preview').append(`
+                            <img src="${event.target.result}" alt="pic" style="max-width:100px;max-height: 100px;" class="not-uploaded"/>
                         `);
                     }
                     reader.readAsDataURL(file);
@@ -209,10 +270,10 @@
             }
         } else {
             $('#imagens').val(null);
-            $('.row-images').empty();
-
-            for(let i=0; i<5; i++) {
-                $('.row-images').append(`<i class="far fa-image fa-5x image-${i}"></i>`);
+            for(let i=0; i<quantidade_disponivel; i++) {
+                $('.not-uploaded').remove();
+                $(`.image-${i}`).remove();
+                $('.preview').append(`<i class="far fa-image fa-5x image-${i}"></i>`);
             }
         }
     });
@@ -264,13 +325,20 @@
                 success: function (data) {
                     if(data) {
                         data.data.forEach(element => {
-                            $('#subcategoria_id').append(`
-                                <option value="${element.id}">${element.text}</option>
-                            `);
+                            if(element.id === produto.subcategoria_id) {
+                                $('#subcategoria_id').append(`
+                                    <option value="${element.id}" selected>${element.text}</option>
+                                `);
+                            } else {
+                                $('#subcategoria_id').append(`
+                                    <option value="${element.id}">${element.text}</option>
+                                `);
+                            }
                         });
                     }
                 },
                 error: function(data) {
+                    console.log(data);
                 }
             });
         } else {
@@ -279,9 +347,11 @@
     });
 
     $(function() {
+        console.log(produto);
         $('#categoria_id').select2({});
         $('#subcategoria_id').select2({});
-        $('#empresa_parceira_id').select2({});
-    })
+
+        $('#categoria_id').val(produto.categoria_id).change();
+    });
 </script>
 @stop

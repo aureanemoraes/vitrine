@@ -20,4 +20,13 @@ class EmpresaParceira extends Model
         'descricao',
         'site'
     ];
+
+    public static function getEmpresasParceiras() {
+        return EmpresaParceira::all();
+    }
+
+    // Relacionamentos
+    public function produtos() {
+        return $this->hasMany(Produto::class);
+    }
 }

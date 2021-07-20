@@ -10,6 +10,10 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.2/dist/sweetalert2.js"></script>
 <!---- Select2 ---->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<!---- JQUERY MASK ---->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js" integrity="sha512-0XDfGxFliYJPFrideYOoxdgNIvrwGTLnmK20xZbCAvPfLGQMzHUsaqZK8ZoH+luXGRxTrS46+Aq400nCnAT0/w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
 
 <script>
     let spinnerHTML = `
@@ -124,6 +128,8 @@
     $(function() {
         $('.alert-success').hide();
         $('.alert-warning').hide();
+        $('.numero').mask('000.000.000.000.000.00', {reverse: true});
+
     });
 </script>
 @yield('js')

@@ -60,14 +60,29 @@ class DbV1 extends Migration
             $table->longText('descricao')->nullable();
             $table->float('valor')->nullable();
             $table->float('desconto')->nullable();
-            $table->tinyInteger('disponibilidade')->default(1);
+            $table->tinyInteger('disponibilidade')->default(0);
             $table->tinyInteger('relevante')->default(0);
             $table->json('imagens')->nullable();
+            $table->unsignedBigInteger('categoria_id');
+            $table->foreign('categoria_id')->references('id')->on('categorias');
+            $table->unsignedBigInteger('subcategoria_id');
+            $table->foreign('subcategoria_id')->references('id')->on('subcategorias');
+            $table->unsignedBigInteger('empresa_parceira_id')->nullable();
+            $table->foreign('empresa_parceira_id')->references('id')->on('empresas_parceiras');
             $table->softDeletes();
             $table->timestamps();
         });
 
         Schema::create('produtos_descontos', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('produto_id');
+            $table->foreign('produto_id')->references('id')->on('produtos');
+            $table->unsignedBigInteger('desconto_id');
+            $table->foreign('desconto_id')->references('id')->on('descontos');
+            $table->timestamps();
+        });
+
+        Schema::create('empresas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('produto_id');
             $table->foreign('produto_id')->references('id')->on('produtos');

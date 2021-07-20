@@ -2,35 +2,10 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/app-with-filter.css') }}"/>
-    <style>
-        .card:hover {
-            filter: brightness(0.9);
-        }
-        .produto-imagem {
-            height: 18.75rem;
-            display: flex;
-            align-items: center;
-            background: white;
-        }
-
-        .produto-preco {
-            height: 11.35rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: white;
-        }
-    </style>
 @endsection
 
 @section('filtros')
-    @include('components.filtros', [
-        'filtro_promocao' => $filtro_promocao,
-        'filtro_categorias' => $filtro_categorias,
-        'filtro_subcategorias' => $filtro_subcategorias,
-        'filtro_empresas_parceiras' => $filtro_empresas_parceiras
-    ])
+    @include('components.filtros')
 @endsection
 
 @section('breadcrumb')
@@ -74,7 +49,7 @@
                             <div class="mask rgba-white-slight"></div>
                             </a>
                         </div>
-                        <div class="card-body text-center produto-preco">
+                        <div class="card-body text-center">
                             <a href="" class="grey-text">
                             <h5>{{$produto->subcategoria->nome}}</h5>
                             </a>

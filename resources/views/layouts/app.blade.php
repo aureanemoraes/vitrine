@@ -9,13 +9,51 @@
         @include('layouts.css')
     </head>
     <body>
-        @include('components.navbar')
-        <main>
-            <div class="breadcrumb">
+        <div class="main">
+            <nav>
+                @include('components.navbar')
+            </nav>
+
+            <header>
                 @yield('breadcrumb')
+            </header>
+            <main>
+                @yield('content')
+            </main>
+
+            <aside>
+                @yield('filtros')
+            </aside>
+
+            <footer>
+              footer
+            </footer>
+          </div>
+        {{-- <div class="wrapper">
+            <header class="main-head">
+                @include('components.navbar')
+            </header>
+            <nav class="main-nav">
+                @yield('breadcrumb')
+            </nav>
+            <article class="content">
+                @yield('content')
+            </article>
+            <aside class="side">
+                @yield('filtros')
+            </aside>
+            <div class="ad">Advertising</div>
+            <footer class="main-footer">The footer</footer>
+        </div> --}}
+
+        {{-- <div class="main">
+            <div class="breadcrumb">
             </div>
-            @yield('content')
-        </main>
+            <div class="filtros">
+            </div>
+            <main class="conteudo">
+            </main>
+        </div> --}}
         @include('layouts.js')
     </body>
 </html>

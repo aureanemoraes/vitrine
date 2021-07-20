@@ -1,12 +1,18 @@
 <nav aria-label="Navegação entre páginas">
     <ul class="pagination pagination-sm justify-content-end">
+
+    </ul>
+</nav>
+
+<nav class="d-flex justify-content-center wow fadeIn">
+    <ul class="pagination pg-blue">
         @php($pagina_anterior = $pagina_atual - 1)
         @if($pagina_anterior > 0)
-        <li class="page-item">
-            <a class="page-link" href="{{$anterior}}">
-                {{ $pagina_anterior }}
-            </a>
-        </li>
+            <li class="page-item">
+                <a class="page-link" href="{{$anterior}}">
+                    {{ $pagina_anterior }}
+                </a>
+            </li>
         @endif
 
         <li class="page-item active">
@@ -24,4 +30,4 @@
             </li>
         @endif
     </ul>
-</nav>
+  </nav>
