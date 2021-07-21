@@ -68,7 +68,7 @@
         $('#desconto-label').text('Novo desconto');
         $('.form-group').children(':input').val('');
         $('#submit').attr('onclick', enviarFormulario('post', `descontos`, 'desconto-form'));
-        abrirModal();
+        abrirModal('criacao');
     }
 
     function alterarDesconto(desconto) {
@@ -80,8 +80,12 @@
         abrirModal();
     }
 
-    function abrirModal() {
-        $('.form-group').children(':input').removeClass('is-valid').removeClass('is-invalid');
+    function abrirModal(tipo='alteracao') {
+        if(tipo !== 'alteracao') {
+            $('.form-outline').children(':input').val('');
+            $('#relevante').removeAttr('checked');
+        }
+        $('.form-outline').children(':input').removeClass('is-valid').removeClass('is-invalid');
         $('#desconto-modal').modal('show');
     }
 

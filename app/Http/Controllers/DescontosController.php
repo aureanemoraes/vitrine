@@ -15,7 +15,8 @@ class DescontosController extends Controller
 
     public function store(Request $request)
     {
-        $this->validaDados($request);
+        if($this->validaDados($request)) return $this->validaDados($request);
+
         Desconto::create($request->all())->toJson();
         return;
     }
@@ -27,7 +28,7 @@ class DescontosController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->validaDados($request);
+        if($this->validaDados($request)) return $this->validaDados($request);
 
         $desconto = Desconto::findOrFail($id);
         $desconto->fill($request->all());
