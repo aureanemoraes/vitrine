@@ -68,20 +68,23 @@
         $('#parcelamento-label').text('Novo parcelamento');
         $('.form-group').children(':input').val('');
         $('#submit').attr('onclick', enviarFormulario('post', `parcelamentos`, 'parcelamento-form'));
-        abrirModal();
+        abrirModal('criacao');
     }
 
     function alterarParcelamento(parcelamento) {
         $('#parcelamento-label').text(`Alterar ${parcelamento.nome}`);
         $('#nome').val(parcelamento.nome);
-        $('#forma_pagamento').val(parcelamento.forma_pagamento.id).change();
-        $('#porcentagem').val(parcelamento.porcentagem);
+        $('#parcelas').val(parcelamento.parcelas);
+        $('#valor_minimo').val(parcelamento.valor_minimo);
         $('#submit').attr('onclick', enviarFormulario('put', `parcelamentos/${parcelamento.id}`, 'parcelamento-form'));
         abrirModal();
     }
 
-    function abrirModal() {
-        $('.form-group').children(':input').removeClass('is-valid').removeClass('is-invalid');
+    function abrirModal(tipo='alteracao') {
+        if(tipo !== 'alteracao') {
+            $('.form-outline').children(':input').val('');
+        }
+        $('.form-outline').children(':input').removeClass('is-valid').removeClass('is-invalid');
         $('#parcelamento-modal').modal('show');
     }
 

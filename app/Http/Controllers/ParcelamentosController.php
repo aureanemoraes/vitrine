@@ -15,7 +15,7 @@ class ParcelamentosController extends Controller
 
     public function store(Request $request)
     {
-        $this->validaDados($request);
+        if($this->validaDados($request)) return $this->validaDados($request);
         Parcelamento::create($request->all())->toJson();
         return;
     }
@@ -27,7 +27,7 @@ class ParcelamentosController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->validaDados($request);
+        if($this->validaDados($request)) return $this->validaDados($request);
 
         $parcelamento = Parcelamento::findOrFail($id);
         $parcelamento->fill($request->all());
