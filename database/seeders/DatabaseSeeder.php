@@ -14,7 +14,8 @@ class DatabaseSeeder extends Seeder
         // Categorias
             DB::table('categorias')->insert([
                 'nome' => 'Ortodontia',
-                'descricao' => 'Produtos odontológicos'
+                'descricao' => 'Produtos odontológicos',
+                'relevante' => 1
             ]);
 
             DB::table('categorias')->insert([

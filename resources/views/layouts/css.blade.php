@@ -24,6 +24,6 @@
 <link rel="stylesheet" href="{{asset('css/app.scss')}}"/>
 
 <style>
-    /* .dropdown:hover .dropdown-menu {display: block;} */
+    .dropdown:hover .dropdown-menu {display: block;}
 </style>
 @yield('css')

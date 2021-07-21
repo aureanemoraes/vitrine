@@ -12,6 +12,7 @@ class DbV1 extends Migration
             $table->id();
             $table->string('nome');
             $table->longText('descricao')->nullable();
+            $table->tinyInteger('relevante')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

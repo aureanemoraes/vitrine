@@ -24,38 +24,78 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/produtos/encontrar/filtro?promocao=true">Promoções</a>
                 </li>
-                <!-- Categorias -->
-                @php($categorias = App\Models\Categoria::getCategorias())
+                <!-- Categorias Relevantes -->
+                @php($categorias = App\Models\Categoria::getCategoriasPrincipais())
                 @if(count($categorias) > 0)
-                    @php($counter = 1)
                     @foreach($categorias as $categoria)
-                        @if($counter <= 8)
-                            <li class="nav-item me-3 me-lg-0 dropdown">
-                                <a
-                                    class="nav-link dropdown-toggle"
-                                    href="#"
-                                    id="{{$categoria->id}}"
-                                    role="button"
-                                    data-mdb-toggle="dropdown"
-                                    aria-expanded="false"
+                        <li class="nav-item me-3 me-lg-0 dropdown">
+                            <a
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                id="{{$categoria->id}}"
+                                role="button"
+                                data-mdb-toggle="dropdown"
+                                aria-expanded="false"
+                                >
+                                {{ $categoria->nome }}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="{{$categoria->id}}">
+                                <!-- subcategorias --->
+                                @if(count($categoria->subcategorias) > 0)
+                                    @foreach($categoria->subcategorias as $subcategoria)
+                                        <li>
+                                            <a class="dropdown-item" href="#">{{ $subcategoria->nome }}</a>
+                                        </li>
+                                    @endforeach
+                                @endif
+                                <li><hr class="dropdown-divider" /></li>
+                                <li>
+                                    <a
+                                    class="dropdown-item"
+                                    href="{{ route('produtos.encontrar.filtro', ['categorias' => [$categoria->id]]) }}"
                                     >
-                                    {{ $categoria->nome }}
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="{{$categoria->id}}">
-                                    <!-- subcategorias --->
-                                    @if(count($categoria->subcategorias) > 0)
-                                        @foreach($categoria->subcategorias as $subcategoria)
-                                            <li>
-                                                <a class="dropdown-item" href="#">{{ $subcategoria->nome }}</a>
-                                            </li>
-                                        @endforeach
-                                    @endif
-                                </ul>
-                            </li>
-                        @endif
-                        @php($counter = $counter + 1)
+                                        Todos
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     @endforeach
                 @endif
+                <!-- Categorias Secundárias -->
+                @php($categorias = App\Models\Categoria::getCategoriasSecundarias())
+                         <li class="nav-item me-3 me-lg-0 dropdown">
+                             <a
+                                 class="nav-link dropdown-toggle"
+                                 href="#"
+                                 id="outras"
+                                 role="button"
+                                 data-mdb-toggle="dropdown"
+                                 aria-expanded="false"
+                                 >
+                                 Outras
+                             </a>
+                             <ul class="dropdown-menu" aria-labelledby="outras">
+                                @if(count($categorias) > 0)
+                                    @foreach($categorias as $categoria)
+                                        <!-- categorias --->
+                                        <li>
+                                            <a class="dropdown-item  text-end" href="{{ route('produtos.encontrar.filtro', ['categorias' => [$categoria->id]]) }}">
+                                                <strong>{{ $categoria->nome }}</strong>
+                                            </a>
+                                        </li>
+                                        <!-- subcategorias --->
+                                        @if(count($categoria->subcategorias) > 0)
+                                            @foreach($categoria->subcategorias as $subcategoria)
+                                                <li>
+                                                    <a class="dropdown-item text-end" href="#"><span>{{ $subcategoria->nome }}</span></a>
+                                                </li>
+                                            @endforeach
+                                        @endif
+                                        <li><hr class="dropdown-divider" /></li>
+                                 @endforeach
+                                 @endif
+                             </ul>
+                         </li>
             </ul>
         </div>
         <div class="d-flex align-items-center">

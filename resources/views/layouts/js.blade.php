@@ -73,6 +73,8 @@
                         $('#submit').removeAttr('disabled');
 
                         data = data.responseJSON;
+
+                        console.log(data);
                         $(':input').removeClass('is-invalid');
                         $(':input').addClass('is-valid');
 
@@ -81,7 +83,7 @@
                             for (const [key, value] of Object.entries(data)) {
                                 if(formFields.includes(key)) {
                                     $(`#${key}`).addClass('is-invalid');
-                                    $(`#${key}Feedback`).text(`${value}`);
+                                    $(`#${key}-feedback`).text(`${value}`);
                                 }
                             }
                         }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Categoria;
+use App\Rules\Max8Categorias;
 use Illuminate\Support\Facades\Validator;
 
 class CategoriasController extends Controller
@@ -19,7 +20,7 @@ class CategoriasController extends Controller
 
     public function store(Request $request)
     {
-        $this->validaDados($request);
+        if($this->validaDados($request)) return $this->validaDados($request);
 
         return Categoria::create($request->all())->toJson();
     }
@@ -40,7 +41,7 @@ class CategoriasController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->validaDados($request);
+        if($this->validaDados($request)) return $this->validaDados($request);
 
         $categoria = Categoria::findOrFail($id);
         $categoria->fill($request->all());
@@ -59,7 +60,19 @@ class CategoriasController extends Controller
     public function validaDados($request) {
         $validator = Validator::make($request->all(), [
             'nome' => 'required',
-            'descricao' => 'required'
+            'descricao' => 'nullable',
+            'relevante' => [
+            'nullable',
+            function ($attribute, $value, $fail) {
+                $total_categorias_relevantes = Categoria::where('relevante', true)->count();
+                if($value === 1 && $total_categorias_relevantes <= 1) {
+                    return true;
+                } else {
+                    $fail('Quantidade máxima de categorias relevantes antigida. (Limite: 8)');
+                }
+            },
+
+            ]
         ]);
 
         if ($validator->fails()) {

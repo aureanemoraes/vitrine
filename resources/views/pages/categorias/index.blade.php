@@ -14,6 +14,7 @@
                 <tr>
                     <th>Nome</th>
                     <th>Descrição</th>
+                    <th>Relevante</th>
                     <th class="col-sm-1"></th>
                 </tr>
             </thead>
@@ -22,6 +23,11 @@
                 <tr>
                     <td>{{$categoria->nome}}</td>
                     <td>{{$categoria->descricao}}</td>
+                    @if($categoria->relevante === true)
+                        <td class="text-success">sim</td>
+                    @else
+                        <td class="text-secondary">não</td>
+                    @endif
                     <td class="col-sm-1">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Ações de categorias">
                             <button
@@ -91,7 +97,9 @@
     }
 
     function abrirModal() {
-        $('.form-group').children(':input').removeClass('is-valid').removeClass('is-invalid');
+        $('.form-outline').children(':input').removeClass('is-valid').removeClass('is-invalid');
+        $('.form-check ').children(':input').removeClass('is-valid').removeClass('is-invalid');
+
         $('#categoria-modal').modal('show');
     }
 

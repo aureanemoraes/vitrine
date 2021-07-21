@@ -14,13 +14,26 @@ class Categoria extends Model
     protected $fillable = [
         'id',
         'nome',
-        'descricao'
+        'descricao',
+        'relevante'
+    ];
+
+    protected $casts = [
+        'relevante' => 'boolean',
     ];
 
     protected $table = 'categorias';
 
     public static function getCategorias() {
         return Categoria::all();
+    }
+
+    public static function getCategoriasPrincipais() {
+        return Categoria::where('relevante', true)->get();
+    }
+
+    public static function getCategoriasSecundarias() {
+        return Categoria::where('relevante', false)->get();
     }
 
     public function subcategorias()
