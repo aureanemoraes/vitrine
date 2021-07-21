@@ -33,6 +33,7 @@ class DbV1 extends Migration
             $table->longText('descricao')->nullable();
             $table->string('site')->nullable();
             $table->string('logo')->nullable();
+            $table->tinyInteger('relevante')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

@@ -65,13 +65,12 @@ class CategoriasController extends Controller
             'nullable',
             function ($attribute, $value, $fail) {
                 $total_categorias_relevantes = Categoria::where('relevante', true)->count();
-                if($value === 1 && $total_categorias_relevantes <= 1) {
+                if($value == 1 && $total_categorias_relevantes <= 8) {
                     return true;
                 } else {
                     $fail('Quantidade máxima de categorias relevantes antigida. (Limite: 8)');
                 }
             },
-
             ]
         ]);
 

@@ -86,14 +86,16 @@ class DatabaseSeeder extends Seeder
                 'nome' => 'Orthometric',
                 'logo' => 'teste.jpg',
                 'descricao' => 'Orthometric',
-                'site' => 'https://www.orthometric.com.br/'
+                'site' => 'https://www.orthometric.com.br/',
+                'relevante' => 1
             ]);
 
             DB::table('empresas_parceiras')->insert([
                 'nome' => 'Morelli',
                 'logo' => 'teste.jpg',
                 'descricao' => 'Morelli',
-                'site' => 'https://www.morelli.com.br/'
+                'site' => 'https://www.morelli.com.br/',
+                'relevante' => 1
             ]);
 
             DB::table('empresas_parceiras')->insert([

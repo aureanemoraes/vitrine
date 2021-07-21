@@ -30,9 +30,12 @@
                     </div>
                     <div class="col">
                         <label class="form-label" for="imagem">Logo</label>
-                        <input type="file" class="form-control" id="imagem" name="imagem" />
+                        <input type="file" class="form-control {{$errors->has('imagem') ? 'is-invalid' : ''}}" id="imagem" name="imagem" />
                     </div>
                 </div>
+                @if ($errors->has('imagens'))
+                    <div class="invalid-feedback">{{$errors->first('imagens')}}</div>
+                @endif
             </div>
 
             <div class="form-outline mb-4">
@@ -40,17 +43,20 @@
                     type="text"
                     id="nome"
                     name="nome"
-                    class="form-control"
+                    class="form-control {{$errors->has('nome') ? 'is-invalid' : ''}}"
                     value="{{ $empresa_parceira->nome }}"
                 />
                 <label class="form-label" for="nome">Nome</label>
+                @if ($errors->has('nome'))
+                    <div class="invalid-feedback">{{$errors->first('nome')}}</div>
+                @endif
             </div>
 
             <div class="form-outline mb-4">
                 <textarea
                     id="descricao"
                     name="descricao"
-                    class="form-control"
+                    class="form-control {{$errors->has('descricao') ? 'is-invalid' : ''}}"
                     cols="30"
                     rows="10"
                 >{{ $empresa_parceira->descricao }}</textarea>
@@ -62,10 +68,27 @@
                     type="text"
                     id="site"
                     name="site"
-                    class="form-control"
+                    class="form-control {{$errors->has('site') ? 'is-invalid' : ''}}"
                     value="{{ $empresa_parceira->site }}"
                 />
                 <label class="form-label" for="site">Site</label>
+            </div>
+
+            <div class="form-check form-switch mb-4">
+                <input
+                class="form-check-input {{$errors->has('relevante') ? 'is-invalid' : ''}}"
+                type="checkbox"
+                id="relevante"
+                name="relevante"
+                value="1"
+                {{($empresa_parceira->relevante) ? 'checked' : ''}}
+                />
+                <label class="form-check-label" for="relevante" name="relevante">
+                    Relevante
+                </label>
+                @if ($errors->has('relevante'))
+                    <div class="invalid-feedback">{{$errors->first('relevante')}}</div>
+                @endif
             </div>
             <button type="submit" class="btn btn-primary btn-block">Enviar</button>
         </form>

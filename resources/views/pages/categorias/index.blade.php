@@ -85,18 +85,27 @@
         $('#categoria-label').text('Nova categoria');
         $('.form-group').children(':input').val('');
         $('#submit').attr('onclick', enviarFormulario('post', `categorias`, 'categoria-form'));
-        abrirModal();
+        abrirModal('criacao');
     }
 
     function alterarCategoria(categoria) {
         $('#categoria-label').text(`Alterar ${categoria.nome}`);
         $('#nome').val(categoria.nome);
         $('#descricao').val(categoria.descricao);
+        if(categoria.relevante === true) {
+            $('#relevante').attr('checked', 'checked');
+        } else {
+            $('#relevante').removeAttr('checked');
+        }
         $('#submit').attr('onclick', enviarFormulario('put', `categorias/${categoria.id}`, 'categoria-form'));
         abrirModal();
     }
 
-    function abrirModal() {
+    function abrirModal(tipo='alteracao') {
+        if(tipo !== 'alteracao') {
+            $('.form-outline').children(':input').val('');
+            $('#relevante').removeAttr('checked');
+        }
         $('.form-outline').children(':input').removeClass('is-valid').removeClass('is-invalid');
         $('.form-check ').children(':input').removeClass('is-valid').removeClass('is-invalid');
 

@@ -18,6 +18,7 @@
                     <th>Logo</th>
                     <th>Nome</th>
                     <th>Site</th>
+                    <th>Relevante</th>
                     <th class="col-sm-1"></th>
                 </tr>
             </thead>
@@ -33,6 +34,11 @@
                     </td>
                     <td>{{$empresa_parceira->nome}}</td>
                     <td>{{$empresa_parceira->site}}</td>
+                    @if($empresa_parceira->relevante === true)
+                        <td class="text-success">sim</td>
+                    @else
+                        <td class="text-secondary">não</td>
+                    @endif
                     <td class="col-sm-1">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Ações de empresas parceiras">
                             <a

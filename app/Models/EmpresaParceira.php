@@ -18,7 +18,12 @@ class EmpresaParceira extends Model
         'nome',
         'logo',
         'descricao',
-        'site'
+        'site',
+        'relevante'
+    ];
+
+    protected $casts = [
+        'relevante' => 'boolean',
     ];
 
     public static function getEmpresasParceiras() {

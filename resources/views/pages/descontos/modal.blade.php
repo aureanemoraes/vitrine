@@ -23,6 +23,7 @@ aria-hidden="true"
                 <div class="form-outline mb-4">
                     <input type="text" id="nome" name="nome" class="form-control" />
                     <label class="form-label" for="nome">Nome</label>
+                    <div class="invalid-feedback" id="nome-feedback"></div>
                 </div>
 
                 <div class="mb-4">
@@ -35,12 +36,14 @@ aria-hidden="true"
                             <option value="5">Transferência bancaria</option>
                             <option value="6">Pix</option>
                     </select>
+                    <div class="invalid-feedback" id="forma_pagamento-feedback"></div>
                 </div>
 
                 <div class="form-outline mb-4">
                     <i class="fas fa-percent trailing"></i>
                     <input type="number" id="porcentagem" name="porcentagem" class="form-control form-icon-trailing" />
                     <label class="form-label" for="porcentagem">Desconto</label>
+                    <div class="invalid-feedback" id="porcentagem-feedback"></div>
                 </div>
             </div>
             <div class="modal-footer">

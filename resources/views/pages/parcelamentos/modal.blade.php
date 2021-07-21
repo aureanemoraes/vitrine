@@ -23,17 +23,20 @@ aria-hidden="true"
                 <div class="form-outline mb-4">
                     <input type="text" id="nome" name="nome" class="form-control" />
                     <label class="form-label" for="nome">Nome</label>
+                    <div class="invalid-feedback" id="nome-feedback"></div>
                 </div>
 
                 <div class="form-outline mb-4">
                     <input type="number" id="parcelas" name="parcelas" class="form-control" />
                     <label class="form-label" for="parcelas">Parcelas</label>
+                    <div class="invalid-feedback" id="parcelas-feedback"></div>
                 </div>
 
                 <div class="form-outline mb-4">
                     <i class="fas fa-coins trailing"></i>
                     <input type="number" id="valor_minimo" name="valor_minimo" class="form-control form-icon-trailing" />
                     <label class="form-label" for="valor_minimo">Valor <strong>(R$)</strong></label>
+                    <div class="invalid-feedback" id="valor_minimo-feedback"></div>
                 </div>
             </div>
             <div class="modal-footer">

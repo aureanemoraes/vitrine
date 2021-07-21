@@ -29,7 +29,7 @@ class Produto extends Model
     protected $casts = [
         'imagens' => 'array',
         'disponibilidade' => 'boolean',
-
+        'relevante' => 'boolean'
     ];
 
     protected $appends = [

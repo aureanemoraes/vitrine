@@ -147,7 +147,7 @@ class ProdutosController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/produtos/create')
+            return redirect(url()->previous())
                         ->withErrors($validator)
                         ->withInput();
         }

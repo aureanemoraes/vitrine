@@ -23,7 +23,7 @@ class EmpresasParceirasController extends Controller
 
     public function store(Request $request)
     {
-        $this->validaDados($request);
+        if($this->validaDados($request)) return $this->validaDados($request);
 
         $nomeImagem = time().'.'.$request->imagem->extension();
         $request->imagem->move(public_path('logos'), $nomeImagem);
@@ -51,7 +51,8 @@ class EmpresasParceirasController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->validaDados($request);
+        if($this->validaDados($request)) return $this->validaDados($request);
+
         $empresa_parceira = EmpresaParceira::findOrFail($id);
         $dados = $request->all();
 
@@ -88,11 +89,24 @@ class EmpresasParceirasController extends Controller
             'nome' => 'required|string',
             'imagem' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // validação de imagem
             'descricao' => 'nullable|string',
-            'site' => 'nullable|string'
+            'site' => 'nullable|string',
+            'relevante' => [
+                'nullable',
+                function ($attribute, $value, $fail) {
+                    $total_ep_relevantes = EmpresaParceira::where('relevante', 1)->count();
+                    if($value == 1 && $total_ep_relevantes <= 8) {
+                        return true;
+                    } else {
+                        $fail('Quantidade máxima de categorias relevantes antigida. (Limite: 8)');
+                    }
+                },
+            ]
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 406);
-        };
+            return redirect(url()->previous())
+                        ->withErrors($validator)
+                        ->withInput();
+        }
     }
 }
