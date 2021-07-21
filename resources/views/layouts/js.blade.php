@@ -130,7 +130,6 @@
     $(function() {
         $('.alert-success').hide();
         $('.alert-warning').hide();
-        $('.numero').mask('000.000.000.000.000.00', {reverse: true});
 
     });
 </script>

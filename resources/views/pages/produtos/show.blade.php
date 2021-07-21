@@ -1,5 +1,15 @@
 @extends('layouts.app')
 
+@section('css')
+    <style>
+        .btn-parcelamentos {
+            /* padding: 0; */
+            /* margin: 0; */
+            text-align: left;
+        }
+    </style>
+@stop
+
 @section('content')
     <div class="container dark-grey-text mt-5">
         <div class="row wow fadeIn">
@@ -112,7 +122,7 @@
                             </span>
                             <span class="text-success">{{ $produto->valor_com_desconto_formatado }}</span>
                         @else
-                            <span class="text-success">{{ $produto->valor_fomatado }}</span>
+                            <span class="text-success">{{ $produto->valor_formatado }}</span>
                         @endif
                     </p>
 
@@ -149,4 +159,13 @@
         </div>
         <br><br>
     </div>
+@stop
+
+@section('js')
+    <script>
+        // parcelamentos
+        function exibirParcelas() {
+            $('#parcelamentos').modal('show');
+        }
+    </script>
 @stop

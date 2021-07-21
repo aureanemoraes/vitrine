@@ -137,7 +137,6 @@ class ProdutosController extends Controller
             'descricao' => 'nullable|string',
             'valor' => 'required|numeric',
             'disponibilidade' => 'nullable|boolean',
-            'imagens' => 'required',
             'imagens.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // validação de imagem
             'desconto' => 'nullable|numeric',
             'relevante' => 'nullable|boolean',
@@ -196,7 +195,8 @@ class ProdutosController extends Controller
                 $resultados = $resultados->whereIn('empresa_parceira_id', $empresas_parceiras);
         }
 
-        $resultados = $resultados->paginate();
+        $resultados = $resultados->orderBy('desconto', 'desc')->orderBy('relevante', 'desc')->orderBy('valor', 'asc')
+            ->paginate();
 
         return view('pages.produtos.index')->with([
             'produtos' => $resultados,

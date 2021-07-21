@@ -78,6 +78,24 @@ class Produto extends Model
         }
     }
 
+    public static function parcelasProduto($valor) {
+        $parcelamentos = Parcelamento::orderBy('valor_minimo', 'desc')->get();
+        if(count($parcelamentos) > 0) {
+            foreach($parcelamentos as $parcelamento) {
+                if($valor > $parcelamento->valor_minimo) {
+                    $info['parcelas'] = $parcelamento->parcelas;
+                    $info['valor_parcela'] = floatval($valor)/floatval($parcelamento->parcelas);
+                    $info['valor_parcela_formatado'] = 'R$ ' . number_format($info['valor_parcela'], 2, ',', '.');
+                    $info['valor_total'] = $valor;
+                    $info['valor_total_formatado'] = 'R$ ' . number_format($info['valor_total'], 2, ',', '.');
+                    return $info;
+                }
+            }
+        } else {
+            return false;
+        }
+    }
+
     public static function produtoInfo($produto_id) {
         return Produto::find($produto_id);
     }
