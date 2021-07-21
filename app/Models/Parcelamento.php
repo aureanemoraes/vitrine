@@ -18,4 +18,8 @@ class Parcelamento extends Model
         'parcelas',
         'valor_minimo'
     ];
+
+    public static function getParcelamentos() {
+        return Parcelamento::orderBy('valor_minimo', 'desc')->get();
+    }
 }

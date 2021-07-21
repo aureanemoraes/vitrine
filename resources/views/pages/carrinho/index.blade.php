@@ -58,6 +58,7 @@
                 <tbody>
                     {{-- {{session()->flush()}} --}}
                     @if(session('produtos'))
+                        @php($parcelamentos = App\Models\Parcelamento::getParcelamentos())
                         @php($subtotal = 0)
                         @foreach(session('produtos') as $produto_id => $quantidade)
                             <tr>
@@ -151,32 +152,71 @@
                         @php($formas_pagamento = App\Models\Desconto::formas_pagamento())
                         @if(count($formas_pagamento) > 0)
                             @foreach($formas_pagamento as $forma_pagamento)
-                            <label class="list-group-item d-flex justify-content-between align-items-center" id="forma_pagamento_label">
-                                <div class="infos">
-                                    <span>{{ $forma_pagamento->label }}</span> |
-                                    @if($forma_pagamento->desconto->porcentagem > 0)
-                                        <span class="text-warning disabled">
-                                            <del class="subtotal-produtos-formatado">{{ $subtotal_formatado }}</del>
-                                        </span> -
-                                        <span class="text-primary disabled">
-                                            {{ $forma_pagamento->desconto->porcentagem_label }}
-                                        </span> =
-                                        @php($subtotal_com_desconto = $subtotal - ($subtotal * ($forma_pagamento->desconto->porcentagem/100)))
-                                        @php($subtotal_com_desconto_formatado = 'R$ ' . number_format($subtotal_com_desconto, 2, ',', '.'))
-                                        <span class="text-success" id={{ 'subtotal-produtos-desconto-formatado-' . $forma_pagamento->id }}>
-                                            <strong>{{$subtotal_com_desconto_formatado}}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="radio-buttons">
-                                    <input
-                                    class="form-check-input me-1"
-                                    type="radio"
-                                    value="{{ $subtotal_com_desconto }}"
-                                    name="forma_pagamento"
-                                    />
-                                </div>
-                            </label>
+                                @if($forma_pagamento->id === 4)
+                                    <label class="list-group-item d-flex justify-content-between align-items-center" id="forma_pagamento_label">
+                                        <div class="infos">
+                                            <span>{{ $forma_pagamento->label }}</span> |
+                                            @if($forma_pagamento->desconto->porcentagem > 0)
+                                                <span class="text-warning disabled">
+                                                    <del class="subtotal-produtos-formatado">{{ $subtotal_formatado }}</del>
+                                                </span> -
+                                                <span class="text-primary disabled">
+                                                    {{ $forma_pagamento->desconto->porcentagem_label }}
+                                                </span> =
+                                                @php($subtotal_com_desconto = $subtotal - ($subtotal * ($forma_pagamento->desconto->porcentagem/100)))
+                                                @php($subtotal_com_desconto_formatado = 'R$ ' . number_format($subtotal_com_desconto, 2, ',', '.'))
+                                                <span class="text-success" id={{ 'subtotal-produtos-desconto-formatado-' . $forma_pagamento->id }}>
+                                                    <strong>{{$subtotal_com_desconto_formatado}}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                        <div class="radio-buttons">
+                                            @php($parcelamento = App\Models\Produto::parcelasProduto($subtotal_com_desconto))
+                                            @if(isset($parcelamento))
+                                                @php($parcelamento = (object) $parcelamento)
+                                                <span id="parcelas">
+                                                    {{ $parcelamento->parcelas }}x de {{ $parcelamento->valor_parcela_formatado }}
+                                                </span>
+                                            @else
+                                            <span id="parcelas">
+                                            </span>
+                                            @endif
+                                            <input
+                                            class="form-check-input me-1"
+                                            type="radio"
+                                            value="{{ $subtotal_com_desconto }}"
+                                            name="forma_pagamento"
+                                            />
+                                        </div>
+                                    </label>
+                                @else
+                                    <label class="list-group-item d-flex justify-content-between align-items-center" id="forma_pagamento_label">
+                                        <div class="infos">
+                                            <span>{{ $forma_pagamento->label }}</span> |
+                                            @if($forma_pagamento->desconto->porcentagem > 0)
+                                                <span class="text-warning disabled">
+                                                    <del class="subtotal-produtos-formatado">{{ $subtotal_formatado }}</del>
+                                                </span> -
+                                                <span class="text-primary disabled">
+                                                    {{ $forma_pagamento->desconto->porcentagem_label }}
+                                                </span> =
+                                                @php($subtotal_com_desconto = $subtotal - ($subtotal * ($forma_pagamento->desconto->porcentagem/100)))
+                                                @php($subtotal_com_desconto_formatado = 'R$ ' . number_format($subtotal_com_desconto, 2, ',', '.'))
+                                                <span class="text-success" id={{ 'subtotal-produtos-desconto-formatado-' . $forma_pagamento->id }}>
+                                                    <strong>{{$subtotal_com_desconto_formatado}}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                        <div class="radio-buttons">
+                                            <input
+                                            class="form-check-input me-1"
+                                            type="radio"
+                                            value="{{ $subtotal_com_desconto }}"
+                                            name="forma_pagamento"
+                                            />
+                                        </div>
+                                    </label>
+                                @endif
                             @endforeach
                         @endif
                     </div>
@@ -271,16 +311,38 @@
         $('.subtotal-produtos-formatado').text(formatar_valor(valor_subtotal));
         // Alterar valor dos preços finais nas formas de pagamentos;
         let formas_pagamento = {!! json_encode($formas_pagamento) !!} || [];
+        let parcelamentos = {!! json_encode($parcelamentos) !!} || [];
+        let parcelamento_selecionado;
         if(formas_pagamento.length > 0) {
             formas_pagamento.forEach(forma_pagamento => {
                 let valor_total = valor_subtotal - (valor_subtotal * (forma_pagamento.desconto.porcentagem/100));
                 $(`#subtotal-produtos-desconto-formatado-${forma_pagamento.id}`).text(formatar_valor(valor_total));
+                if(forma_pagamento.id == 4) {
+                    // Tratar parcelamento
+                    if(parcelamentos.length > 0) {
+                        parcelamentos.find(parcelamento => {
+                            if(!parcelamento_selecionado) {
+                                if(valor_subtotal > parcelamento.valor_minimo) {
+                                    parcelamento_selecionado = parcelamento;
+                                }
+                            }
+                        });
+                    }
+
+                    if(parcelamento_selecionado) {
+                        let valor_parcela = valor_total / parcelamento_selecionado.parcelas;
+                        $('#parcelas').text(`${parcelamento_selecionado.parcelas}x de ${formatar_valor(valor_parcela)}`);
+                    } else {
+                        $('#parcelas').text('');
+                    }
+                }
             });
         }
 
         // Definir novos valores
         produtos[id].valor_total = valor_total_produto;
         produtos['subtotal'] = valor_subtotal;
+        parcelamento_selecionado = null;
     });
 
     $('input[type=radio][name=forma_pagamento]').change(function() {
