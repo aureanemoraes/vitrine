@@ -30,6 +30,10 @@ class EmpresaParceira extends Model
         return EmpresaParceira::all();
     }
 
+    public static function getEmpresasParceirasPrincipais() {
+        return EmpresaParceira::where('relevante', true)->get();
+    }
+
     // Relacionamentos
     public function produtos() {
         return $this->hasMany(Produto::class);

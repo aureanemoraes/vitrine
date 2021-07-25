@@ -15,7 +15,6 @@ class ProdutosController extends Controller
     public function index()
     {
         $produtos = Produto::paginate();
-
         return view('pages.produtos.index')->with([
             'produtos' => $produtos,
             'filtro_promocao' => null,
@@ -183,16 +182,16 @@ class ProdutosController extends Controller
 
         if(isset($subcategorias) && count($subcategorias) > 0) {
             if(isset($resultados))
-                $resultados = Produto::whereIn('subcategoria_id', $subcategorias);
-            else
                 $resultados = $resultados->whereIn('subcategoria_id', $subcategorias);
+            else
+                $resultados = Produto::whereIn('subcategoria_id', $subcategorias);
         }
 
         if(isset($empresas_parceiras) && count($empresas_parceiras) > 0) {
             if(isset($resultados))
-                $resultados = Produto::whereIn('empresa_parceira_id', $empresas_parceiras);
-            else
                 $resultados = $resultados->whereIn('empresa_parceira_id', $empresas_parceiras);
+            else
+                $resultados = Produto::whereIn('empresa_parceira_id', $empresas_parceiras);
         }
 
         $resultados = $resultados->orderBy('desconto', 'desc')->orderBy('relevante', 'desc')->orderBy('valor', 'asc')

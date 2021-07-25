@@ -1,0 +1,44 @@
+        .info-produto:hover {
+            filter: brightness(0.9);
+        }
+        .produto-imagem {
+            height: 18.75rem;
+            display: flex;
+            align-items: center;
+            background: white;
+        }
+
+        .card-body {
+            /* height: 11.35rem; */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: white;
+            text-align: center;
+        }
+
+        .produto-subcategoria {
+            display: flex;
+            flex-direction: column;
+            height: 2rem;
+            overflow-y: hidden;
+            word-break: break-word;
+        }
+
+        .produto-nome {
+            display: flex;
+            margin: 0 auto;
+            height: 4.5rem;
+            max-width: 12.5rem;
+            overflow-y: hidden;
+            word-break: break-word;
+            line-height: normal;
+            font-size: 1.2rem;
+        }
+
+        .produto-preco {
+            height: 2rem;
+            font-size: 1.2rem;
+        }
+

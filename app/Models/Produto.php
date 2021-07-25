@@ -96,6 +96,11 @@ class Produto extends Model
         }
     }
 
+    public static function getProdutosRelevantes() {
+        $produtos_relevantes = Produto::whereNotNull('desconto')->orWhere('relevante')->limit(8)->get();
+        return $produtos_relevantes;
+    }
+
     public static function produtoInfo($produto_id) {
         return Produto::find($produto_id);
     }

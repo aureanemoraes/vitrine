@@ -44,8 +44,8 @@
                         class="form-check-input filled-in"
                         name="empresas_parceiras[]"
                         id="{{$empresa_parceira->nome .  '-' . $empresa_parceira->id}}"
-                        value={{$empresa_parceira->id}}>
-                        {{isset($filtro_empresas_parceiras) && in_array($empresa_parceira->id, $filtro_empresas_parceiras) ? 'checked' : ''}}
+                        value={{$empresa_parceira->id}}
+                        {{isset($filtro_empresas_parceiras) && in_array($empresa_parceira->id, $filtro_empresas_parceiras) ? 'checked' : ''}}>
                     <label
                         class="form-check-label small text-uppercase card-link-secondary"
                         for="{{$empresa_parceira->nome .  '-' . $empresa_parceira->id}}">

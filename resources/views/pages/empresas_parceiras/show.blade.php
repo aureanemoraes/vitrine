@@ -1,5 +1,19 @@
 @extends('layouts.app')
 
+@section('css')
+    <style>
+        img.logo-empresa-parceira {
+            height:80px;
+            width:80px;
+            object-fit:contain;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            padding: 0.500rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+    <link rel="stylesheet" href="{{ asset('css/produtos.css') }}"/>
+@stop
+
 @section('breadcrumb')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -11,38 +25,26 @@
         </li>
     </ol>
 </nav>
+
 @stop
 
 @section('content')
 <div class="container">
     @include('components.alerts')
     <div class="card">
-        <div class="card-header">
-            <div class="row row-image">
-                <div class="col-auto logo-image">
-                    {{-- Logo --}}
-                    <img
-                        src="{{ asset('logos/' . $empresa_parceira->logo) }}"
-                        alt="Logo da empresa {{ $empresa_parceira->nome }}"
-                        style="max-width:80px;max-height: 80px;"
-                    />
-                </div>
-                <div class="col">
-                    <div class="row">
-                        <h5 class="card-title">{{ $empresa_parceira->nome }}</h5>
-                    </div>
-                    <div class="row">
-                        <a href="{{ $empresa_parceira->site }}" title="Visitar site">{{ $empresa_parceira->site }}</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card-body">
+        <div class="card-body text-center">
+            <section class="header text-center">
+                <img
+                src="{{ asset('logos-empresas/' . $empresa_parceira->logo) }}"
+                alt="Logo da empresa {{ $empresa_parceira->nome }}"
+                class="img-fluid rounded logo-empresa-parceira"
+                />
+                <h5 class="card-title">{{ $empresa_parceira->nome }}</h5>
+                <a href="{{ $empresa_parceira->site }}" title="Visitar site">{{ $empresa_parceira->site }}</a>
+            </section>
             <p class="card-text">{{ $empresa_parceira->descricao }}</p>
         </div>
-        <div class="card-footer">
-            <a class="btn btn-primary float-end" href="#" role="button">Produtos <i class="fas fa-chevron-right"></i></a>
-        </div>
+        @include('partials.produtos', ['produtos' => $produtos])
     </div>
 </div>
 @stop

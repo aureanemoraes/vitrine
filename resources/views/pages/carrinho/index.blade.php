@@ -72,8 +72,10 @@
                                         <strong>
                                             <a href="{{ route('produtos.show', $produto->id) }}">{{ $produto->nome }}</a>
                                         </strong>
+                                        <span class="text-muted">{{ $produto->empresa_parceira->nome}}</span>
+
                                         </h5>
-                                        <p class="text-muted">{{ $produto->empresa_parceira->nome}}</p>
+                                        {{-- <p class="text-muted">{{ $produto->empresa_parceira->nome}}</p> --}}
                                     </td>
                                     <td></td>
                                     <td id="{{ 'valor-produto-' . $produto_id . '-formatado'}}">

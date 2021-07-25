@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EmpresaParceira;
+use App\Models\Produto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
@@ -37,8 +38,11 @@ class EmpresasParceirasController extends Controller
 
     public function show($id)
     {
+        $produtos = Produto::where('empresa_parceira_id', $id)->paginate();
+
         return view('pages.empresas_parceiras.show')->with([
-            'empresa_parceira' => EmpresaParceira::findOrFail($id)
+            'empresa_parceira' => EmpresaParceira::findOrFail($id),
+            'produtos' => $produtos
         ]);
     }
 

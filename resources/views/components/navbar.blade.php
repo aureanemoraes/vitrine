@@ -44,7 +44,9 @@
                                 @if(count($categoria->subcategorias) > 0)
                                     @foreach($categoria->subcategorias as $subcategoria)
                                         <li>
-                                            <a class="dropdown-item" href="#">{{ $subcategoria->nome }}</a>
+                                            <a class="dropdown-item" href="{{ route('produtos.encontrar.filtro', ['subcategorias' => [$subcategoria->id]])}}"
+                                            >{{ $subcategoria->nome }}
+                                        </a>
                                         </li>
                                     @endforeach
                                 @endif
@@ -87,7 +89,9 @@
                                         @if(count($categoria->subcategorias) > 0)
                                             @foreach($categoria->subcategorias as $subcategoria)
                                                 <li>
-                                                    <a class="dropdown-item text-end" href="#"><span>{{ $subcategoria->nome }}</span></a>
+                                                    <a class="dropdown-item text-end" href="{{ route('produtos.encontrar.filtro', ['subcategorias' => [$subcategoria->id]])}}">
+                                                        <span>{{ $subcategoria->nome }}</span>
+                                                    </a>
                                                 </li>
                                             @endforeach
                                         @endif

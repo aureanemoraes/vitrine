@@ -84,7 +84,7 @@ class DatabaseSeeder extends Seeder
         // Empresas parceiras
             DB::table('empresas_parceiras')->insert([
                 'nome' => 'Orthometric',
-                'logo' => 'teste.jpg',
+                'logo' => 'logomarca-teste.gif',
                 'descricao' => 'Orthometric',
                 'site' => 'https://www.orthometric.com.br/',
                 'relevante' => 1
@@ -92,7 +92,7 @@ class DatabaseSeeder extends Seeder
 
             DB::table('empresas_parceiras')->insert([
                 'nome' => 'Morelli',
-                'logo' => 'teste.jpg',
+                'logo' => 'logomarca-teste.gif',
                 'descricao' => 'Morelli',
                 'site' => 'https://www.morelli.com.br/',
                 'relevante' => 1
@@ -100,20 +100,20 @@ class DatabaseSeeder extends Seeder
 
             DB::table('empresas_parceiras')->insert([
                 'nome' => 'Singular',
-                'logo' => 'teste.jpg',
+                'logo' => 'logomarca-teste.gif',
                 'descricao' => 'Singular',
             ]);
 
             DB::table('empresas_parceiras')->insert([
                 'nome' => 'Microdont',
-                'logo' => 'teste.jpg',
+                'logo' => 'logomarca-teste.gif',
                 'descricao' => 'Microdont',
                 'site' => 'https://microdont.com.br/'
             ]);
 
             DB::table('empresas_parceiras')->insert([
                 'nome' => 'Saevo',
-                'logo' => 'teste.jpg',
+                'logo' => 'logomarca-teste.gif',
                 'descricao' => 'Saevo',
             ]);
         // Produtos
