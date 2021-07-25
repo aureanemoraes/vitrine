@@ -90,8 +90,9 @@
     <div class="container">
         <section class="empresas-parceiras-principais">
             <nav class="navbar navbar-dark bg-dark mt-3 mb-5 submenu">
-                <div class="container-fluid">
+                <div class="container-fluid d-flex align-items-between">
                     <a class="navbar-brand" href="#">Nossas principais parceiras</a>
+                    <a href="{{ route('empresas_parceiras.index') }}" class="btn btn-link float-end" data-mdb-ripple-color="dark">Ver todas</a>
                 </div>
             </nav>
             @php($empresas_parceiras = App\Models\EmpresaParceira::getEmpresasParceirasPrincipais())
@@ -117,7 +118,8 @@
                             title=""
                             type="button"
                             class="btn btn-link float-end"
-                            data-mdb-ripple-color="dark">
+                            data-mdb-ripple-color="dark"
+                            >
                                 Ver produtos <i class="fas fa-chevron-right"></i>
                             </a>
                         </div>

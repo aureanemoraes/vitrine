@@ -3,15 +3,9 @@
 @section('content')
 <div class="container">
     <h3>Empresas Parceiras</h3>
-    <section class="novo-item">
-        <a type="button" class="btn btn-success btn-md" href="{{ route('empresas_parceiras.create') }}">
-            <i class="fas fa-plus"></i>
-            <span>
-                Nova empresa parceira
-            </span>
-        </a>
-    </section>
-    <div class="table-responsive">
+
+    @include('partials.empresas_parceiras', ['empresas_parceiras' => $empresas_parceiras])
+    {{-- <div class="table-responsive">
         <table  class="table table-hover table-sm">
             <thead>
                 <tr>
@@ -72,7 +66,7 @@
                 @endforeach
             </tbody>
         </table>
-    </div>
+    </div> --}}
 </div>
 @stop
 
