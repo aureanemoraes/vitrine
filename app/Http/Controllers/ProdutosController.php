@@ -14,7 +14,12 @@ class ProdutosController extends Controller
 {
     public function index()
     {
-        $produtos = Produto::paginate();
+        $produtos = Produto::orderBy('desconto', 'desc')
+        ->orderBy('relevante', 'desc')
+        ->orderBy('valor', 'asc')
+        ->orderBy('disponibilidade', 'desc')
+        ->paginate();
+
         return view('pages.produtos.index')->with([
             'produtos' => $produtos,
             'filtro_promocao' => null,
@@ -105,6 +110,11 @@ class ProdutosController extends Controller
             $dados['imagens'] = $dados_imagens;
         }
 
+
+        if(!isset($dados['disponibilidade'])) $dados['disponibilidade'] = 0;
+        if(!isset($dados['relevante'])) $dados['relevante'] = 0;
+
+
         $produto->fill($dados)->save();
 
         return view('pages.produtos.show')->with([
@@ -135,10 +145,10 @@ class ProdutosController extends Controller
             'nome' => 'required|string',
             'descricao' => 'nullable|string',
             'valor' => 'required|numeric',
-            'disponibilidade' => 'nullable|boolean',
+            'disponibilidade' => 'nullable|integer',
             'imagens.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // validação de imagem
             'desconto' => 'nullable|numeric',
-            'relevante' => 'nullable|boolean',
+            'relevante' => 'nullable|integer',
             'categoria_id' => 'required|integer',
             'subcategoria_id' => 'required|integer',
             'empresa_parceira_id' => 'nullable|integer'
@@ -155,12 +165,23 @@ class ProdutosController extends Controller
     public function encontrar_por_pesquisa(Request $request) {
         $nome = $request->query('nome');
         if(isset($nome)) {
-            $resultados = Produto::where('nome', 'ilike', "%$nome%")->paginate();
+            $resultados = Produto::where('nome', 'like', "%$nome%")
+                ->orderBy('desconto', 'desc')
+                ->orderBy('relevante', 'desc')
+                ->orderBy('valor', 'asc')
+                ->orderBy('disponibilidade', 'desc')
+                ->paginate();
         }
 
         $url_origem = url()->previous();
 
-        return view('pages.produtos.index')->with(['produtos' => $resultados]);
+        return view('pages.produtos.index')->with([
+            'produtos' => $resultados,
+            'filtro_promocao' => null,
+            'filtro_categorias' => null,
+            'filtro_subcategorias' => null,
+            'filtro_empresas_parceiras' => null
+        ]);
     }
 
     public function encontrar_por_filtro(Request $request) {
@@ -194,7 +215,10 @@ class ProdutosController extends Controller
                 $resultados = Produto::whereIn('empresa_parceira_id', $empresas_parceiras);
         }
 
-        $resultados = $resultados->orderBy('desconto', 'desc')->orderBy('relevante', 'desc')->orderBy('valor', 'asc')
+        $resultados = $resultados->orderBy('desconto', 'desc')
+            ->orderBy('relevante', 'desc')
+            ->orderBy('valor', 'asc')
+            ->orderBy('disponibilidade', 'desc')
             ->paginate();
 
         return view('pages.produtos.index')->with([

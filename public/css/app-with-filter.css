@@ -28,12 +28,7 @@ main {
 
 aside {
     grid-area: side;
-    background:#262626;
-    color: white;
-    border-radius: 0.250rem;
-    padding: 1rem;
-    margin-left: 2rem;
-    font-size: 0.825rem;
+
 }
 
 footer {

@@ -1,6 +1,10 @@
 <style>
     .sidebar {
-
+    background:#262626;
+    color: white;
+    border-radius: 0.250rem;
+    padding: 1rem;
+    font-size: 0.825rem;
     }
 </style>
 <div class="sidebar">

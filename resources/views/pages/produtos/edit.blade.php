@@ -141,7 +141,7 @@
                         value="1"
                         {{($produto->disponibilidade) ? 'checked' : ''}}
                     />
-                    <label class="form-check-label" for="disponibilidade" name="disponibilidade">
+                    <label class="form-check-label" for="disponibilidade">
                         Disponível
                     </label>
                 </div>

@@ -1,4 +1,37 @@
 <div class="container">
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <ul class="navbar-nav">
+              <!-- Dropdown -->
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdownMenuLink"
+                  role="button"
+                  data-mdb-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Ordenar por:
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <li>
+                    <a class="dropdown-item" href="#">(A-Z)</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">(Z-A)</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">(Maior preço - Menor preço)</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#">(Menor preço - Maior preço)</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+    </nav>
     <section class="text-center mb-4">
         <div class="d-flex justify-content-center">
             <a href="{{ route('produtos.create') }}" type="button" class="btn btn-success">Novo produto</a>
@@ -33,18 +66,27 @@
                             </p>
                         </section>
                         <section class="produto-preco">
-                            @if($produto->desconto > 0)
-                                <span class="text-warning valor-sem-desconto">
-                                    <del>{{ $produto->valor_formatado }}</del>
-                                </span>
-                                <span class="text-success valor-com-desconto">
-                                    <strong>{{$produto->valor_com_desconto_formatado}}</strong>
-                                </span>
+                            @if($produto->disponibilidade)
+                                @if($produto->desconto > 0)
+                                    <span class="text-warning valor-sem-desconto">
+                                        <del>{{ $produto->valor_formatado }}</del>
+                                    </span>
+                                    <span class="text-success valor-com-desconto">
+                                        <strong>{{$produto->valor_com_desconto_formatado}}</strong>
+                                    </span>
+                                @else
+                                    <span class="text-warning valor-sem-desconto">
+                                    </span>
+                                    <span class="blue-text">
+                                        <strong>{{$produto->valor_formatado}}</strong>
+                                    </span>
+                                @endif
                             @else
-                                <span class="text-warning valor-sem-desconto">
+                                <span class="text-muted">
+                                    INDISPONÍVEL
                                 </span>
                                 <span class="blue-text">
-                                    <strong>{{$produto->valor_formatado}}</strong>
+                                    <strong><del>{{$produto->valor_formatado}}</del></strong>
                                 </span>
                             @endif
                         </section>

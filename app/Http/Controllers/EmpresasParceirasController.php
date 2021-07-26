@@ -38,7 +38,12 @@ class EmpresasParceirasController extends Controller
 
     public function show($id)
     {
-        $produtos = Produto::where('empresa_parceira_id', $id)->paginate();
+        $produtos = Produto::where('empresa_parceira_id', $id)
+            ->orderBy('desconto', 'desc')
+            ->orderBy('relevante', 'desc')
+            ->orderBy('valor', 'asc')
+            ->orderBy('disponibilidade', 'desc')
+            ->paginate();
 
         return view('pages.empresas_parceiras.show')->with([
             'empresa_parceira' => EmpresaParceira::findOrFail($id),

@@ -129,6 +129,7 @@
                     @include('components.formas_pagamento', [
                         'produto' => $produto
                     ])
+                    @if($produto->disponibilidade)
 
                     <form class="d-flex justify-content-left" action="{{ route('carrinho.adicionar') }}" method="POST">
                         @csrf
@@ -143,10 +144,15 @@
                             min="1"
                             value="1"
                         >
-                        <button class="btn btn-primary btn-md my-0 p" type="submit">
-                            Adicionar ao <i class="fas fa-shopping-cart ml-1"></i>
-                        </button>
+                            <button class="btn btn-primary btn-md my-0 p" type="submit">
+                                Adicionar ao <i class="fas fa-shopping-cart ml-1"></i>
+                            </button>
                     </form>
+                    @else
+                    <button class="btn btn-light btn-md my-0 p" disabled>
+                        INDISPONÍVEL
+                    </button>
+                    @endif
                 </div>
             </div>
         </div>

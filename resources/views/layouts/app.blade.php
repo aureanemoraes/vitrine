@@ -15,14 +15,20 @@
             </nav>
 
             <header>
-                @yield('breadcrumb')
+                <div class="container-fluid">
+                    <nav class="breadcrumb-container">
+                        @yield('breadcrumb')
+                    </nav>
+                </div>
             </header>
             <main>
-                @yield('content')
+                    @yield('content')
             </main>
 
             <aside>
-                @yield('filtros')
+                <div class="container">
+                    @yield('filtros')
+                </div>
             </aside>
 
             <footer>

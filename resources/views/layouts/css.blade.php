@@ -25,5 +25,16 @@
 
 <style>
     .dropdown:hover .dropdown-menu {display: block;}
+
+    .card {
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+    }
+
+    .breadcrumb-container {
+        border-bottom: 1px solid black;
+        margin: 0;
+        padding: 0;
+    }
 </style>
 @yield('css')
