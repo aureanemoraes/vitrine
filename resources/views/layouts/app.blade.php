@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -22,17 +24,15 @@
                 </div>
             </header>
             <main>
-                    @yield('content')
+                @yield('content')
             </main>
 
             <aside>
-                <div class="container">
-                    @yield('filtros')
-                </div>
+                @yield('filtros')
             </aside>
 
             <footer>
-              footer
+                @include('components.footer')
             </footer>
           </div>
         {{-- <div class="wrapper">

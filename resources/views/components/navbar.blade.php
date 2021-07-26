@@ -1,4 +1,28 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<style>
+    .navbar-norteodonto  {
+        background-color: #25558b;
+    }
+
+    a.nav-link {
+        color:#f5f5f5 ;
+
+    }
+
+    .nav-link.active {
+        /* border-start-end-radius: 0.400rem; */
+        font-weight: 600;
+    }
+
+    .dropdown-item.active {
+        border-radius: 0 !important;
+    }
+
+</style>
+@php($subcategoria_selecionada = request()->get('subcategorias'))
+@php($categoria_selecionada = request()->get('categorias'))
+@php($outros = false)
+
+<nav class="navbar navbar-expand-lg navbar-norteodonto">
     <div class="container-fluid">
         <button
             class="navbar-toggler"
@@ -29,8 +53,19 @@
                 @if(count($categorias) > 0)
                     @foreach($categorias as $categoria)
                         <li class="nav-item me-3 me-lg-0 dropdown">
+                            @if(isset($subcategoria_selecionada) && count($subcategoria_selecionada) == 1)
+                                @if($categoria->id == $subcategoria_selecionada[0])
+                                    @php($outros = false)
+                                    @php($class = "nav-link dropdown-toggle active")
+                                @else
+                                    @php($outros = true)
+                                    @php($class = "nav-link dropdown-toggle")
+                                @endif
+                            @else
+                                @php($class = "nav-link dropdown-toggle")
+                            @endif
                             <a
-                                class="nav-link dropdown-toggle"
+                                class="{{$class}}"
                                 href="#"
                                 id="{{$categoria->id}}"
                                 role="button"
@@ -39,12 +74,14 @@
                                 >
                                 {{ $categoria->nome }}
                             </a>
+
                             <ul class="dropdown-menu" aria-labelledby="{{$categoria->id}}">
                                 <!-- subcategorias --->
                                 @if(count($categoria->subcategorias) > 0)
                                     @foreach($categoria->subcategorias as $subcategoria)
+                                        @php($current = url()->full() == route('produtos.encontrar.filtro', ['subcategorias' => [$subcategoria->id]]) ? true : false)
                                         <li>
-                                            <a class="dropdown-item" href="{{ route('produtos.encontrar.filtro', ['subcategorias' => [$subcategoria->id]])}}"
+                                            <a class="dropdown-item {{ $current ? 'active' : '' }}" href="{{ route('produtos.encontrar.filtro', ['subcategorias' => [$subcategoria->id]])}}"
                                             >{{ $subcategoria->nome }}
                                         </a>
                                         </li>
@@ -67,7 +104,7 @@
                 @php($categorias = App\Models\Categoria::getCategoriasSecundarias())
                          <li class="nav-item me-3 me-lg-0 dropdown">
                              <a
-                                 class="nav-link dropdown-toggle"
+                                 class="nav-link dropdown-toggle {{ $outros ? 'active' : '' }}"
                                  href="#"
                                  id="outras"
                                  role="button"

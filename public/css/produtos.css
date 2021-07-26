@@ -29,12 +29,12 @@
         .produto-nome {
             display: flex;
             margin: 0 auto;
-            height: 4.5rem;
+            height: 2.5rem;
             max-width: 12.5rem;
             overflow-y: hidden;
             word-break: break-word;
             line-height: normal;
-            font-size: 1.2rem;
+            font-size: 1rem;
         }
 
         .produto-preco {

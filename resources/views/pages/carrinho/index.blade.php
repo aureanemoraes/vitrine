@@ -257,6 +257,10 @@
                 </div>
             </div>
         </section>
+    @else
+        @php($formas_pagamento = [])
+        @php($parcelamentos = [])
+        @php($produtos = [])
     @endif
 </div>
 @stop

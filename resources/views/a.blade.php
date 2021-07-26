@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('css')
+    <link rel="stylesheet" href="{{ asset('css/produtos.css') }}"/>
+
     <style>
         img.logo-empresa-parceira {
             height:80px;
@@ -12,7 +14,12 @@
         }
 
         .submenu {
-            border-radius: 1rem;
+            background: #53aeda;
+            border-radius: 0.500rem;
+        }
+
+        .info-produto:hover {
+            filter: brightness(0.9);
         }
     </style>
 @stop
@@ -45,7 +52,7 @@
                         src="{{ asset('produtos-imagens/caroulse1.png') }}"
                         class="d-block w-100"
                         alt="..."
-                        style="height: 300px; object-fit:contain; background: #53AEDA"
+                        style="height: 300px; object-fit:contain; "
                     />
                     <div class="carousel-caption d-none d-md-block">
                         {{-- <h5>First slide label</h5>
@@ -58,7 +65,7 @@
                         src="{{ asset('produtos-imagens/carousel2.png') }}"
                         class="d-block w-100"
                         alt="..."
-                        style="height: 300px; object-fit:contain; background: #53AEDA"
+                        style="height: 300px; object-fit:contain;"
                     />
                     <div class="carousel-caption d-none d-md-block">
                         <h5>Second slide label</h5>
@@ -89,7 +96,7 @@
     </section>
     <div class="container">
         <section class="empresas-parceiras-principais">
-            <nav class="navbar navbar-dark bg-dark mt-3 mb-5 submenu">
+            <nav class="navbar mt-3 mb-3 submenu">
                 <div class="container-fluid d-flex align-items-between">
                     <a class="navbar-brand" href="#">Nossas principais parceiras</a>
                     <a href="{{ route('empresas_parceiras.index') }}" class="btn btn-link float-end" data-mdb-ripple-color="dark">Ver todas</a>
@@ -130,32 +137,18 @@
             @endif
         </section>
         <section class="produtos-em-promocao">
-            <nav class="navbar navbar-dark bg-dark mt-3 mb-5 submenu">
+            <nav class="navbar mt-3 mb-3 submenu">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#">Nossas promoções</a>
                 </div>
             </nav>
             @php($produtos_relevantes = App\Models\Produto::getProdutosRelevantes())
             @if(count($produtos_relevantes) > 0)
-            <div class="row row-cols-1 row-cols-md-4 g-4">
-                @foreach($produtos_relevantes as $produto)
-                    <div class="col">
-                      <div class="card h-100">
-                        <img
-                          src="{{ asset('produtos-imagens/' . $produto->imagens[0]) }}"
-                          class="img-fluid rounded-pill"
-                          alt="..."
-                        />
-                        <div class="card-body">
-                          <h5 class="card-title">{{ $produto->nome }}</h5>
-                          <p class="card-text">
-                           {{ $produto->descricao }}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                @endforeach
-            </div>
+                @include('partials.produtos', [
+                    'produtos' => $produtos_relevantes,
+                    'ordenar' => false,
+                    'paginacao' => false
+                ])
             @endif
         </section>
     </div>

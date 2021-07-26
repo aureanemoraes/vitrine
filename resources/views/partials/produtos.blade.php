@@ -1,4 +1,5 @@
 <div class="container">
+    @if($ordenar == true)
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
             <ul class="navbar-nav">
@@ -32,6 +33,7 @@
             </ul>
           </div>
     </nav>
+    @endif
     <section class="text-center mb-4">
         <div class="d-flex justify-content-center">
             <a href="{{ route('produtos.create') }}" type="button" class="btn btn-success">Novo produto</a>
@@ -122,10 +124,12 @@
     </section>
 
   <!--Pagination-->
-    @include('components.pagination', [
-        'anterior' => $produtos->previousPageUrl(),
-        'atual' => url()->current(),
-        'proxima' => $produtos->nextPageUrl(),
-        'pagina_atual' => $produtos->currentPage()
-    ])
+    @if($paginacao)
+        @include('components.pagination', [
+            'anterior' => $produtos->previousPageUrl(),
+            'atual' => url()->current(),
+            'proxima' => $produtos->nextPageUrl(),
+            'pagina_atual' => $produtos->currentPage()
+        ])
+    @endif
 </div>

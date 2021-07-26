@@ -30,7 +30,7 @@
 
 @section('content')
 <main>
-    @include('partials.produtos', ['produtos' => $produtos])
+    @include('partials.produtos', ['produtos' => $produtos, 'ordenar' => true, 'paginacao' => true])
 </main>
   <!--Main layout-->
 @stop

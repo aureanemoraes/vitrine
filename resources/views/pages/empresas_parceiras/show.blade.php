@@ -44,7 +44,7 @@
             </section>
             <p class="card-text">{{ $empresa_parceira->descricao }}</p>
         </div>
-        @include('partials.produtos', ['produtos' => $produtos])
+        @include('partials.produtos', ['produtos' => $produtos, 'ordenar' => true, 'paginacao' => true])
     </div>
 </div>
 @stop
