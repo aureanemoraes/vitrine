@@ -38,8 +38,8 @@
         <div class="collapse navbar-collapse" id="navBar">
             <a class="navbar-brand mt-2 mt-lg-0" href="/">
                 <img
-                src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.png"
-                height="15"
+                src="{{ asset('logos-empresas/logo.png') }}"
+                height="35"
                 alt=""
                 loading="lazy"
                 />
@@ -147,37 +147,43 @@
                 </span>
             </a>
             </a>
-            <a
-                class="dropdown-toggle d-flex align-items-center hidden-arrow"
-                href="#"
-                id="navbarDropdownMenuLink"
-                role="button"
-                data-mdb-toggle="dropdown"
-                aria-expanded="false">
-                Usuário
-            </a>
-            <ul
-                class="dropdown-menu dropdown-menu-end"
-                aria-labelledby="navbarDropdownMenuLink" >
-                <li>
-                    <a class="dropdown-item" href="{{ route('produtos.index') }}">Produtos</a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="{{ route('categorias.index') }}">Categorias</a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="{{ route('empresas_parceiras.index') }}">Empresas Parceiras</a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="{{ route('descontos.index') }}">Descontos</a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="{{ route('parcelamentos.index') }}">Parcelamentos</a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="#">Logout</a>
-                </li>
-            </ul>
+            @auth
+                <a
+                    class="dropdown-toggle d-flex align-items-center hidden-arrow"
+                    href="#"
+                    id="navbarDropdownMenuLink"
+                    role="button"
+                    data-mdb-toggle="dropdown"
+                    aria-expanded="false">
+                    {{ Auth::user()->name }}
+                </a>
+                <ul
+                    class="dropdown-menu dropdown-menu-end"
+                    aria-labelledby="navbarDropdownMenuLink" >
+                    <li>
+                        <a class="dropdown-item" href="{{ route('produtos.index') }}">Produtos</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('categorias.index') }}">Categorias</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('empresas_parceiras.index') }}">Empresas Parceiras</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('descontos.index') }}">Descontos</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('parcelamentos.index') }}">Parcelamentos</a>
+                    </li>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+
+                        <li>
+                            <button class="dropdown-item" type="submit">Logout</button>
+                        </li>
+                    </form>
+                </ul>
+            @endauth
         </div>
         <!-- Right elements -->
     </div>

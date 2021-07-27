@@ -7,6 +7,16 @@
             /* margin: 0; */
             text-align: left;
         }
+
+        .btn-carrinho {
+            background: #53aeda;
+            margin-left: 0.5rem;
+        }
+
+        .btn-carrinho:hover {
+            background: #53aeda;
+            filter: brightness(0.9) !important;
+        }
     </style>
 @stop
 
@@ -103,7 +113,7 @@
             </div>
             <div class="col-md-6 mb-4">
                 <div class="p-4">
-                <h5>{{$produto->nome}}</h5>
+                <h5 class="produto-nome">{{$produto->nome}}</h5>
                     <div class="mb-3">
                         @if(isset($produto->subcategoria->categoria))
                             <span class="badge bg-secondary">{{ $produto->subcategoria->categoria->nome }}</span>
@@ -144,7 +154,7 @@
                             min="1"
                             value="1"
                         >
-                            <button class="btn btn-primary btn-md my-0 p" type="submit">
+                            <button class="btn btn-primary btn-md my-0 p btn-carrinho" type="submit">
                                 Adicionar ao <i class="fas fa-shopping-cart ml-1"></i>
                             </button>
                     </form>

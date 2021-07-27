@@ -18,6 +18,14 @@
         padding-left: 0.225rem;
         color: #f5f5f5;
     }
+
+    .btn-filtro {
+        margin-bottom: 0.5rem;
+    }
+
+    .btn-pesquisar {
+        margin-left: 0.5rem;
+    }
 </style>
 <div class="container">
     <div class="sidebar">
@@ -28,7 +36,7 @@
                 <section class="mb-4">
                     <div class="md-form md-outline mt-0 d-flex justify-content-between align-items-center">
                         <input type="text" id="nome" name="nome" class="form-control form-control-sm mb-0" placeholder="Pesquisar...">
-                        <button type="submit" class="btn btn-flat btn-sm btn-primary"><i class="fas fa-search"></i></button>
+                        <button type="submit" class="btn btn-flat btn-sm btn-primary btn-pesquisar"><i class="fas fa-search"></i></button>
                     </div>
                 </section>
             </form>
@@ -122,12 +130,13 @@
                     @endforeach
                 </section>
 
-                <button type="submit" class="btn btn-primary btn-sm">Filtrar</button>
-                @php($url_atual = url()->current())
-                @if(str_contains($url_atual, "encontrar") === true)
-                    <a href="{{ route('produtos.index') }}" type="button" class="btn btn-primary btn-sm">Remover filtros</a>
-                @endif
-
+                <section>
+                    <button type="submit" class="btn btn-primary btn-sm btn-filtro">Filtrar</button>
+                    @php($url_atual = url()->current())
+                    @if(str_contains($url_atual, "encontrar") === true)
+                        <a href="{{ route('produtos.index') }}" type="button" class="btn btn-primary btn-sm">Remover filtros</a>
+                    @endif
+                </section>
             </form>
         </section>
     </div>

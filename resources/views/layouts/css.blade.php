@@ -32,6 +32,11 @@
         scroll-behavior: smooth;
     }
 
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Montserrat Alternates', sans-serif;
+        font-weight: bold;
+    }
+
     .dropdown:hover .dropdown-menu { display: block; border-radius: 0; }
 
 

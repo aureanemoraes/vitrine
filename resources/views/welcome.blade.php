@@ -1,5 +1,35 @@
 @extends('layouts.app')
 
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/produtos.css') }}"/>
+
+    <style>
+        img.logo-empresa-parceira {
+            height:80px;
+            width:80px;
+            object-fit:contain;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            padding: 0.500rem;
+            margin-bottom: 1rem;
+        }
+
+        .submenu {
+            background: #53aeda;
+            border-radius: 0.500rem;
+            padding: 0.05rem;
+        }
+
+        .submenu .navbar-brand {
+            color: white;
+
+        }
+
+        .info-produto:hover {
+            filter: brightness(0.9);
+        }
+    </style>
+@stop
+
 @section('content')
     <section class="anuncios">
         <div
@@ -25,23 +55,23 @@
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img
-                        src="https://mdbootstrap.com/img/Photos/Slides/img%20(19).jpg"
+                        src="{{ asset('produtos-imagens/caroulse1.png') }}"
                         class="d-block w-100"
                         alt="..."
-                        style="height: 400px; object-fit:cover"
+                        style="height: 300px; object-fit:contain; "
                     />
                     <div class="carousel-caption d-none d-md-block">
-                        <h5>First slide label</h5>
-                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                        {{-- <h5>First slide label</h5>
+                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> --}}
                     </div>
                 </div>
 
                 <div class="carousel-item">
                     <img
-                        src="https://mdbootstrap.com/img/Photos/Slides/img%20(35).jpg"
+                        src="{{ asset('produtos-imagens/carousel2.png') }}"
                         class="d-block w-100"
                         alt="..."
-                        style="height: 400px; object-fit:cover"
+                        style="height: 300px; object-fit:contain;"
                     />
                     <div class="carousel-caption d-none d-md-block">
                         <h5>Second slide label</h5>
@@ -72,29 +102,40 @@
     </section>
     <div class="container">
         <section class="empresas-parceiras-principais">
-            <nav class="navbar navbar-dark bg-dark mt-3 mb-5">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="#">Nossas principais parceiras ⭐</a>
+            <nav class="navbar mt-3 mb-3 submenu">
+                <div class="container-fluid d-flex align-items-between">
+                    <span class="navbar-brand">Nossas principais parceiras</span>
+                    <a href="{{ route('empresas_parceiras.index') }}" class="btn btn-link float-end" data-mdb-ripple-color="dark">Ver todas</a>
                 </div>
             </nav>
             @php($empresas_parceiras = App\Models\EmpresaParceira::getEmpresasParceirasPrincipais())
             @if(count($empresas_parceiras) > 0)
             <div class="row row-cols-1 row-cols-md-4 g-4">
-                {{dd($empresas_parceiras)}}
                 @foreach($empresas_parceiras as $empresa_parceira)
                     <div class="col">
                       <div class="card h-100">
-                        <img
-                          src="{{ asset('logos-empresas/' . $empresa_parceira->imagem) }}"
-                          class="img-fluid rounded-pill"
-                          alt="..."
-                        />
-                        <div class="card-body">
-                          <h5 class="card-title">Card title</h5>
-                          <p class="card-text">
-                            This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.
-                          </p>
+                        <div class="card-body text-center">
+                            <img
+                            src="{{ asset('logos-empresas/' . $empresa_parceira->logo) }}"
+                            class="img-fluid rounded logo-empresa-parceira"
+                            alt="..."
+                            />
+                            <h5 class="card-title">{{ $empresa_parceira->nome }}</h5>
+                            <p class="card-text">
+                                {{ $empresa_parceira->descricao }}
+                            </p>
+                        </div>
+                        <div class="card-footer ">
+                            <a
+                            href="{{ route('empresas_parceiras.show', $empresa_parceira->id) }}"
+                            title=""
+                            type="button"
+                            class="btn btn-light float-end"
+                            style="color:black"
+                            data-mdb-ripple-color="dark"
+                            >
+                                Ver produtos <i class="fas fa-chevron-right"></i>
+                            </a>
                         </div>
                       </div>
                     </div>
@@ -103,11 +144,19 @@
             @endif
         </section>
         <section class="produtos-em-promocao">
-            <nav class="navbar navbar-dark bg-dark mt-3 mb-5">
+            <nav class="navbar mt-3 mb-3 submenu">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#">Nossas promoções</a>
+                    <span class="navbar-brand">Nossas promoções</span>
                 </div>
             </nav>
+            @php($produtos_relevantes = App\Models\Produto::getProdutosRelevantes())
+            @if(count($produtos_relevantes) > 0)
+                @include('partials.produtos', [
+                    'produtos' => $produtos_relevantes,
+                    'ordenar' => false,
+                    'paginacao' => false
+                ])
+            @endif
         </section>
     </div>
 @stop

@@ -28,6 +28,11 @@
             color: green;
         }
 
+        .produto-nome {
+            color: #53aeda;
+
+        }
+
     </style>
 @stop
 
@@ -68,13 +73,11 @@
                                         <img src="{{ asset('produtos-imagens/' . $produto->imagens[0]) }}" alt="" class="img-fluid z-depth-0" width="80px" height="80px">
                                     </th>
                                     <td>
-                                        <h5 class="mt-3">
+                                        <h6 class="mt-3">
                                         <strong>
-                                            <a href="{{ route('produtos.show', $produto->id) }}">{{ $produto->nome }}</a>
+                                            <a class="produto-nome" href="{{ route('produtos.show', $produto->id) }}">{{ $produto->nome }}</a>
                                         </strong>
-                                        <span class="text-muted">{{ $produto->empresa_parceira->nome}}</span>
-
-                                        </h5>
+                                        </h6>
                                         {{-- <p class="text-muted">{{ $produto->empresa_parceira->nome}}</p> --}}
                                     </td>
                                     <td></td>

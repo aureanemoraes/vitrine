@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\CarrinhoController;
 use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\DescontosController;
@@ -22,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('a');
+    return view('welcome');
 });
 
 Route::post('adicionar-item', [CarrinhoController::class, 'adicionar_item'])->name('carrinho.adicionar');
@@ -47,10 +46,8 @@ Route::resource('descontos', DescontosController::class);
 Route::resource('parcelamentos', ParcelamentosController::class);
 Route::resource('produtos', ProdutosController::class);
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
-
-
-
-
-
-
+require __DIR__.'/auth.php';

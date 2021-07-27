@@ -35,9 +35,11 @@
     </nav>
     @endif
     <section class="text-center mb-4">
-        <div class="d-flex justify-content-center">
-            <a href="{{ route('produtos.create') }}" type="button" class="btn btn-success">Novo produto</a>
-        </div>
+        @auth
+            <div class="d-flex justify-content-center">
+                <a href="{{ route('produtos.create') }}" type="button" class="btn btn-success">Novo produto</a>
+            </div>
+        @endauth
 
         @php($counter = 1)
         @foreach($produtos as $produto)
@@ -79,7 +81,7 @@
                                 @else
                                     <span class="text-warning valor-sem-desconto">
                                     </span>
-                                    <span class="blue-text">
+                                    <span class="preco-padrao">
                                         <strong>{{$produto->valor_formatado}}</strong>
                                     </span>
                                 @endif
@@ -95,26 +97,28 @@
                     </div>
                 </div>
 
-                <div class="card-footer">
-                <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                    <a
-                    type="button"
-                    href="{{ route('produtos.edit', $produto->id) }}"
-                    class="btn btn-warning"
-                    title="Alterar"
-                    >
-                    <i class="far fa-edit"></i>
-                    </a>
-                    <button
-                        type="button"
-                        class="btn btn-danger"
-                        title="Excluir"
-                        onclick="excluirItem('/produtos',{{$produto}})"
-                    >
-                        <i class="far fa-trash-alt"></i>
-                    </button>
-                </div>
-                </div>
+                @auth
+                    <div class="card-footer">
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                            <a
+                            type="button"
+                            href="{{ route('produtos.edit', $produto->id) }}"
+                            class="btn btn-warning"
+                            title="Alterar"
+                            >
+                            <i class="far fa-edit"></i>
+                            </a>
+                            <button
+                                type="button"
+                                class="btn btn-danger"
+                                title="Excluir"
+                                onclick="excluirItem('/produtos',{{$produto}})"
+                            >
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                @endauth
             </div>
             @if($counter === 4)
                 </div>
