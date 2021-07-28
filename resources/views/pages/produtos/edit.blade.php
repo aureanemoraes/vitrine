@@ -73,11 +73,10 @@
                 <textarea
                     id="descricao"
                     name="descricao"
-                    class="form-control {{$errors->has('descricao') ? 'is-invalid' : ''}}"
+                    class="ckeditor form-control {{$errors->has('descricao') ? 'is-invalid' : ''}}"
                     cols="30"
                     rows="10"
-                >{{$produto->descricao}}</textarea>
-                <label class="form-label" for="descricao">Descrição</label>
+                >{{ $produto->descricao }}</textarea>
 
                 @if ($errors->has('descricao'))
                     <div class="invalid-feedback">{{$errors->first('descricao')}}</div>
@@ -203,6 +202,12 @@
 
 @section('js')
 <script>
+     ClassicEditor
+        .create( document.querySelector( '.ckeditor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+
     let produto = JSON.parse($('#produto').val());
 
     // Funções

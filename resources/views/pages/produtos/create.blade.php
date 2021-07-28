@@ -46,15 +46,14 @@
             </div>
 
 
-            <div class="form-outline mb-4">
+            <div class="form-group mb-4">
                 <textarea
                     id="descricao"
                     name="descricao"
-                    class="form-control {{$errors->has('descricao') ? 'is-invalid' : ''}}"
+                    class="ckeditor form-control {{$errors->has('descricao') ? 'is-invalid' : ''}}"
                     cols="30"
                     rows="10"
                 >{{old('descricao')}}</textarea>
-                <label class="form-label" for="descricao">Descrição</label>
 
                 @if ($errors->has('descricao'))
                     <div class="invalid-feedback">{{$errors->first('descricao')}}</div>
@@ -180,6 +179,12 @@
 
 @section('js')
 <script>
+    ClassicEditor
+        .create( document.querySelector( '.ckeditor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+
     // Funções
     function calcularDesconto(preco_atual, porcentagem_desconto, exibir_preco_id) {
         let porcentagem = porcentagem_desconto / 100;

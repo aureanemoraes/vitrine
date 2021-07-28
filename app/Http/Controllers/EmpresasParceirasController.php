@@ -78,7 +78,8 @@ class EmpresasParceirasController extends Controller
         $empresa_parceira->save();
 
         return view('pages.empresas_parceiras.show')->with([
-            'empresa_parceira' => $empresa_parceira
+            'empresa_parceira' => $empresa_parceira,
+            'produtos' => Produto::where('empresa_parceira_id', $empresa_parceira->id)->paginate()
         ]);
     }
 

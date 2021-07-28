@@ -108,7 +108,15 @@
                                         </strong>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Remove item">X
+                                        <button
+                                        type="button"
+                                        class="btn btn-sm btn-primary"
+                                        data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="Remove item"
+                                        onclick="excluirItemCarrinho({{$produto_id}})"
+                                        >
+                                            X
                                         </button>
                                     </td>
                                 @endif
@@ -272,6 +280,13 @@
     let valor_final;
     let produtos;
 
+    function excluirItemCarrinho(produto_id) {
+        //let pc = {!! json_encode(session('produtos')) !!};
+        //delete pc[`${produto_id}`];
+        //document.cookie = `produtos_carrinho=${JSON.stringify(pc)}`;
+        //location.reload.bind(location);
+    }
+
     function formatar_valor(valor) {
         return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor);
     }
@@ -358,6 +373,7 @@
         if($(this).is(':checked')) {
             let forma_pagamento = $(this).val();
             valor_final = formatar_valor(forma_pagamento);
+            console.log(forma_pagamento);
             $('#total').text(valor_final);
         }
     });

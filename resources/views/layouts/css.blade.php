@@ -28,14 +28,21 @@
 
 <style>
     * {
+        /* font-family: 'Montserrat Alternates', sans-serif; */
+
         font-family: 'Work Sans', sans-serif;
         scroll-behavior: smooth;
     }
+    .main {
 
-    h1, h2, h3, h4, h5, h6 {
-        font-family: 'Montserrat Alternates', sans-serif;
-        font-weight: bold;
     }
+
+    /* h1, h2, h3, h4, h5, h6 { */
+        /* font-family: 'Montserrat Alternates', sans-serif; */
+        /* font-family: 'Work Sans', sans-serif;
+
+        font-weight: bold;
+    } */
 
     .dropdown:hover .dropdown-menu { display: block; border-radius: 0; }
 
@@ -55,7 +62,7 @@
 
     .breadcrumb {
         border-bottom: 1px solid black;
-        margin: 0;
+        margin: 1rem;
         padding: 0;
     }
 </style>

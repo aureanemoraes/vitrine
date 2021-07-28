@@ -1,12 +1,18 @@
 <style>
     .navbar-norteodonto  {
-        background-color: #25558b;
+        background-color: #1B60AC;
     }
 
     a.nav-link {
         color:#f5f5f5 ;
 
     }
+
+    a.nav-link:hover {
+        font-weight: 600;
+        color: white;
+    }
+
 
     .nav-link.active {
         /* border-start-end-radius: 0.400rem; */
@@ -141,7 +147,7 @@
         </div>
         <div class="d-flex align-items-center">
             <a class="text-reset me-3" href="{{ route('carrinho.index') }}">
-                <i class="fas fa-shopping-cart"></i>
+                <i class="fas fa-shopping-cart" style="color: white"></i>
                 <span class="badge rounded-pill badge-notification bg-danger">
                     {{session('produtos') ? count(session('produtos')) : '0'}}
                 </span>
