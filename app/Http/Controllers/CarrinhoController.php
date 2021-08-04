@@ -44,4 +44,27 @@ class CarrinhoController extends Controller
 
         return redirect(url()->previous());
     }
+
+    public function alterar_quantidade(Request $request) {
+        $produtos = $request->produtos;
+
+        session(['produtos' => $produtos]);
+        session()->save();
+
+
+        return redirect()->route('carrinho.index');
+    }
+
+    public function remover_item ($produto_id) {
+        $produtos_carrinho = session('produtos');
+        unset($produtos_carrinho[$produto_id]);
+        session(['produtos' => $produtos_carrinho]);
+        session()->save();
+        return redirect()->route('carrinho.index');
+    }
+
+    public function limpar_carrinho() {
+        session()->flush();
+        return redirect('/');
+    }
 }

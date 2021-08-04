@@ -25,7 +25,9 @@ Route::get('/', function () {
 });
 
 Route::post('adicionar-item', [CarrinhoController::class, 'adicionar_item'])->name('carrinho.adicionar');
-
+Route::put('alterar-quantidade', [CarrinhoController::class, 'alterar_quantidade'])->name('carrinho.alterar');
+Route::put('alterar-quantidade', [CarrinhoController::class, 'alterar_quantidade'])->name('carrinho.alterar');
+Route::get('remover-item/{produto_id}', [CarrinhoController::class, 'remover_item'])->name('carrinho.remover');
 
 Route::delete('imagens-produtos/{produto_id}/{nome_imagem}', [ImagensController::class, 'destroy_imagens_produtos']);
 Route::get('subcategorias/find/{categoria_id}', [SubcategoriasController::class, 'find']);
