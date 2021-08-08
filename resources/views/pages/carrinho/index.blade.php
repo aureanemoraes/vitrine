@@ -162,6 +162,16 @@
                 </table>
                 @if(session('produtos'))
                     <div class="float-end">
+                        <a
+                        type="button"
+                        class="btn btn-sm btn-primary"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Remove item"
+                        href={{ route('carrinho.limpar') }}
+                        >
+                            Limpar carrinho <i class="fas fa-trash"></i>
+                        </a>
                         <button type="submit" class="btn btn-sm btn-primary">Atualizar carrinho <i class="fas fa-undo"></i></button>
                     </div>
                 @endif
@@ -204,8 +214,9 @@
                                                 @php($parcelamento = App\Models\Produto::parcelasProduto($subtotal))
                                                 @if(isset($parcelamento))
                                                     @php($parcelamento = (object) $parcelamento)
+                                                    @php($texto_parcelas = $parcelamento->parcelas  . 'x de ' . $parcelamento->valor_parcela_formatado)
                                                     <span id="parcelas">
-                                                        {{ $parcelamento->parcelas }}x de {{ $parcelamento->valor_parcela_formatado }}
+                                                        {{$texto_parcelas}}
                                                     </span>
                                                 @else
                                                 <span id="parcelas">
@@ -214,7 +225,7 @@
                                                 <input
                                                 class="form-check-input me-1"
                                                 type="radio"
-                                                value="{{ $subtotal }}"
+                                                value="{{ $forma_pagamento->label . ' - ' . $subtotal_formatado . ' - ' . $texto_parcelas }}"
                                                 name="forma_pagamento"
                                                 />
                                             </div>
@@ -238,7 +249,7 @@
                                                 <input
                                                 class="form-check-input me-1"
                                                 type="radio"
-                                                value="{{ $subtotal }}"
+                                                value="{{ $forma_pagamento->label . ' - ' . $subtotal_formatado }}"
                                                 name="forma_pagamento"
                                                 />
                                             </div>
@@ -286,8 +297,9 @@
                                                 @php($parcelamento = App\Models\Produto::parcelasProduto($subtotal_com_desconto))
                                                 @if(isset($parcelamento))
                                                     @php($parcelamento = (object) $parcelamento)
+                                                    @php($texto_parcelas = $parcelamento->parcelas  . 'x de ' . $parcelamento->valor_parcela_formatado)
                                                     <span id="parcelas">
-                                                        {{ $parcelamento->parcelas }}x de {{ $parcelamento->valor_parcela_formatado }}
+                                                        {{$texto_parcelas}}
                                                     </span>
                                                 @else
                                                 <span id="parcelas">
@@ -296,7 +308,7 @@
                                                 <input
                                                 class="form-check-input me-1"
                                                 type="radio"
-                                                value="{{ $subtotal_com_desconto }}"
+                                                value="{{ $forma_pagamento->label . ' - ' . $subtotal_com_desconto_formatado . ' - ' . $texto_parcelas }}"
                                                 name="forma_pagamento"
                                                 />
                                             </div>
@@ -331,7 +343,7 @@
                                                 <input
                                                 class="form-check-input me-1"
                                                 type="radio"
-                                                value="{{ $subtotal_com_desconto }}"
+                                                value="{{ $forma_pagamento->label . ' - ' . $subtotal_com_desconto_formatado }}"
                                                 name="forma_pagamento"
                                                 />
                                             </div>
@@ -348,10 +360,10 @@
         <section class="finalizar-pedido">
             <div class="card">
                 <div class="card-body">
+                    <p class="card-title"><strong>Informações do cliente</strong></p>
                     <div class="row">
                         <div class="col">
-                            <p class="card-title">Informações do cliente</p>
-                            <div class="form-outline">
+                            <div class="form-outline mb-4">
                                 <input
                                     type="text"
                                     id="nome"
@@ -362,18 +374,142 @@
                                 <label class="form-label" for="nome">Seu nome <span class="text-danger">*</span></label>
                             </div>
                         </div>
-                        <div class="col total">
-                            <p class="card-title"><strong>Total:</strong></p>
-                            <span id="total"></span>
+                        <div class="col">
+                            <div class="form-outline mb-4">
+                                <input
+                                    type="text"
+                                    id="cpf"
+                                    name="cpf"
+                                    class="form-control"
+                                    required
+                                />
+                                <label class="form-label" for="cpf">Seu cpf <span class="text-danger">*</span></label>
+                            </div>
                         </div>
                     </div>
-                    <div class="row zap float-end">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-outline mb-4">
+                                <input
+                                    type="text"
+                                    id="cep"
+                                    name="cep"
+                                    class="form-control"
+                                    required
+                                />
+                                <label class="form-label" for="cep">CEP</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-outline mb-4">
+                                <input
+                                    type="text"
+                                    id="cidade"
+                                    name="cidade"
+                                    class="form-control"
+                                    required
+                                />
+                                <label class="form-label" for="cidade">Cidade</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-outline mb-4">
+                                <input
+                                    type="text"
+                                    id="logradouro"
+                                    name="logradouro"
+                                    class="form-control"
+                                    required
+                                />
+                                <label class="form-label" for="logradouro">Logradouro</label>
+                            </div>
+                        </div>
+                        <div class="col col-md-2">
+                            <div class="form-outline mb-4">
+                                <input
+                                    type="text"
+                                    id="numero"
+                                    name="numero"
+                                    class="form-control"
+                                    required
+                                />
+                                <label class="form-label" for="numero">Nº</label>
+                            </div>
+                        </div>
+                        <div class="col col-md-4">
+                            <div class="form-outline mb-4">
+                                <input
+                                    type="text"
+                                    id="bairro"
+                                    name="bairro"
+                                    class="form-control"
+                                    required
+                                />
+                                <label class="form-label" for="bairro">Bairro</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-outline mb-4">
+                        <input
+                            type="text"
+                            id="nome_clinica"
+                            name="nome_clinica"
+                            class="form-control"
+                            required
+                        />
+                        <label class="form-label" for="nome_clinica">Qual o nome da sua clínica?</label>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="finalizar-pedido">
+            <div class="card">
+                <div class="card-body text-center">
+                    <p class="card-title"><strong>Finalizar orçamento</strong></p>
+                    <p>
+                        <span>Opção selecionada: </span> <strong id="total"></strong>
+                    </p>
+                    <div class="row">
+                        <div class="col ">
+                            <div class="form-check float-end">
+                                <input
+                                class="form-check-input"
+                                type="radio"
+                                name="forma_envio"
+                                id="forma_envio"
+                                value="Entrega"
+                                />
+                                <label class="form-check-label " for="forma_envio">Entrega</label>
+                            </div>
+                        </div>
+                        <div class="col ">
+                            <div class="form-check float-start">
+                                <input
+                                class="form-check-input"
+                                type="radio"
+                                name="forma_envio"
+                                id="forma_envio"
+                                value="Retirada"
+                                />
+                                <label class="form-check-label" for="forma_envio">Retirada</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-danger fade show small" role="alert">
+                        <span><strong>Atenção!</strong>
+                            Realizamos entregas em compras a partir de R$50,00 com frete grátis.
+                            A viabilidade da entrega será confirmada via WhatsApp.
+                        </span>
+                    </div>
+                    <div class="row zap ">
                         <p>
-                            <button type="button" class="btn btn-outline-success" onclick="enviarPedidoNoZap()">
-                                <i class="fab fa-whatsapp"></i> Enviar pedido
+                            <button type="button" class="btn btn-success" onclick="enviarPedidoNoZap()">
+                                <i class="fab fa-whatsapp"></i> Enviar
                             </button>
                         </p>
-                    </div>
                 </div>
             </div>
         </section>
@@ -388,6 +524,7 @@
 <script>
     let valor_final;
     let produtos;
+    let forma_envio;
 
     function excluirItemCarrinho(produto_id) {
         //let pc = {!! json_encode(session('produtos')) !!};
@@ -400,23 +537,46 @@
         return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor);
     }
 
+    $('input[type=radio][name=forma_envio]').change(function() {
+        if($(this).is(':checked')) {
+            forma_envio = $(this).val();
+        }
+    });
+
     function enviarPedidoNoZap() {
-        let produtos_pedido = '';
+        let nome = $('#nome').val();
+        let cpf = $('#cpf').val();
+        let cep = $('#cep').val();
+        let logradouro = $('#logradouro').val();
+        let numero_casa = $('#numero').val();
+        let bairro = $('#bairro').val();
+        let nome_clinica = $('#nome_clinica').val();
+        let cidade = $('#cidade').val();
+
+        let produtos_pedido = '*Resumo do pedido*:';
+        let titulo_1 = `*Meus dados*`;
+        let dados = `
+        *Nome*: ${nome}
+        *Cpf*: ${cpf}
+        *Cep*: ${cep}
+        *Endereço*: ${logradouro}, ${numero_casa} - ${bairro}, ${cidade}
+        *Nome clínica*: ${nome_clinica}
+        *Forma de envio selecionada*: ${forma_envio}
+        -----
+        `;
+        console.log(produtos);
         for(id in produtos) {
             if(id !== 'subtotal') {
                 let produto = produtos[id];
-                produtos_pedido += `\n*Nome*: ${produto.nome}\n*Quantidade*:${produto.quantidade}\n-----`;
+                produtos_pedido += `\n*Nome*: ${produto.nome}\n*Quantidade*: ${produto.quantidade}\n*Valor unitário*:${produto.valor}\n*Valor Total*:${produto.valor_total}\n-----\n`;
             }
         }
         // produtos_pedido += produtos.forEach(produto => {
         //     return `\n*Nome*: ${produto.nome}\n*Quantidade*:${produto.quantidade}\n-----`;
         // });
-        let numero = '5596999751199'
-        let msg = `
-        *Resumo do pedido*:
-        ${produtos_pedido}
-        \n*Valor Final*: ${valor_final}
-        `;
+        let numero = '5596999751199';
+        let final = `${produtos_pedido}\n*Valor Final*: ${valor_final}\n`;
+        let msg = `${titulo_1}${dados}${final}`;
         let alvo = `https://api.whatsapp.com/send?phone=${encodeURIComponent(numero)}&text=${encodeURIComponent(msg)}`
 
         window.open(alvo);
@@ -480,9 +640,8 @@
 
     $('input[type=radio][name=forma_pagamento]').change(function() {
         if($(this).is(':checked')) {
-            let forma_pagamento = $(this).val();
-            valor_final = formatar_valor(forma_pagamento);
-            console.log(forma_pagamento);
+            valor_final = $(this).val();
+            console.log(valor_final);
             $('#total').text(valor_final);
         }
     });
