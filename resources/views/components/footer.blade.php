@@ -14,10 +14,18 @@
         justify-content: space-around;
     }
 
+
+
     .formas_pagamento li {
         background: white;
         padding: 0.5rem;
         border-radius: 1rem;
+    }
+
+    .horario-funcionamento {
+        list-style: none;
+        text-align: left;
+        font-size: 10px;
     }
 </style>
 <!-- Footer -->
@@ -64,10 +72,27 @@
         <div class="row text-center">
           <!--Grid column-->
             <div class="col">
-                <a href="#!" class="text-white">Sobre nós</a>
+                <a href="{{ route('entidades.show', 1) }}" class="text-white">Sobre nós</a>
             </div>
             <div class="col">
                 <a href="#!" class="text-white">Contato</a>
+                <h4>+55 96 8118-8325</h4>
+            </div>
+            <div class="col">
+                <a href="#!" class="text-white">Endereço</a>
+                <p>R. Leopoldo Machado, 3416 - Beirol, Macapá - AP, 68902-020</p>
+            </div>
+            <div class="col">
+                <a href="#!" class="text-white">Horário de funcionamento</a>
+                <ul class="horario-funcionamento">
+                    <li>segunda-feira	08:00–18:00</li>
+                    <li>terça-feira	08:00–18:00</li>
+                    <li>quarta-feira	08:00–18:00</li>
+                    <li>quinta-feira	08:00–18:00</li>
+                    <li>sexta-feira	08:00–18:00</li>
+                    <li>sábado	08:00–12:00</li>
+                    <li>domingo	Fechado</li>
+                </ul>
             </div>
             <div class="col">
                 <p class="titulo">

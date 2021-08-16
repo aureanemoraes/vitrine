@@ -1,8 +1,12 @@
 <?php
+
+use App\Http\Controllers\AnunciosController;
 use App\Http\Controllers\CarrinhoController;
 use App\Http\Controllers\CategoriasController;
 use App\Http\Controllers\DescontosController;
 use App\Http\Controllers\EmpresasParceirasController;
+use App\Http\Controllers\EntidadesController;
+use App\Http\Controllers\ImagemController;
 use App\Http\Controllers\ImagensController;
 use App\Http\Controllers\ParcelamentosController;
 use App\Http\Controllers\ProdutosController;
@@ -23,6 +27,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('imagens/upload', [ImagemController::class, 'upload'])->name('imagem.upload');
+
+Route::get('entidades/formulario', [EntidadesController::class, 'formulario'])->name('entidades.form');
+Route::post('entidades/enviar-formulario', [EntidadesController::class, 'enviar_formulario'])->name('entidades.send');
+Route::put('entidades/enviar-formulario/{id?}', [EntidadesController::class, 'atualizar_formulario'])->name('entidades.update');
+Route::get('sobrenos/{id?}', [EntidadesController::class, 'show'])->name('entidades.show');
 
 Route::post('adicionar-item', [CarrinhoController::class, 'adicionar_item'])->name('carrinho.adicionar');
 Route::put('alterar-quantidade', [CarrinhoController::class, 'alterar_quantidade'])->name('carrinho.alterar');
@@ -48,6 +59,7 @@ Route::resource('empresas_parceiras', EmpresasParceirasController::class);
 Route::resource('descontos', DescontosController::class);
 Route::resource('parcelamentos', ParcelamentosController::class);
 Route::resource('produtos', ProdutosController::class);
+Route::resource('anuncios', AnunciosController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

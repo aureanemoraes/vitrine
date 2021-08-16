@@ -118,6 +118,23 @@ class DbV1 extends Migration
             $table->foreign('desconto_id')->references('id')->on('descontos');
             $table->timestamps();
         });
+
+        Schema::create('anuncios', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome');
+            $table->string('imagem');
+            $table->string('descricao')->nullable();
+            $table->string('url')->nullable();
+            $table->tinyInteger('ativo')->default(1);
+            $table->timestamps();
+        });
+
+        Schema::create('entidades', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome');
+            $table->longText('descricao')->nullable();
+            $table->timestamps();
+        });
     }
 
     public function down()

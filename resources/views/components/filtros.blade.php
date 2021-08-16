@@ -8,8 +8,9 @@
     }
 
     .opcao-filtro{
-        overflow-y: hidden;
-        word-break: break-word;
+        white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     }
 
     .opcao-container:hover {
@@ -88,8 +89,7 @@
                     <h6 class="font-weight-bold mb-3">Categorias</h6>
                     @php($categorias = App\Models\Categoria::getCategorias())
                     @foreach($categorias as $categoria)
-                    <div class="opcao-container">
-                        <div class="form-check pl-0 mb-3">
+                        <div class="form-check pl-0 mb-3 opcao-container">
                             <input
                                 type="checkbox"
                                 class="form-check-input filled-in"
@@ -98,12 +98,27 @@
                                 {{isset($filtro_categorias) && in_array($categoria->id, $filtro_categorias) ? 'checked' : ''}}
                                 >
                             <label
-                                class="form-check-label small"
+                                class="form-check-label small "
                                 for="{{$categoria->nome .  '-' . $categoria->id}}">
                                 {{ $categoria->nome }}
                             </label>
                         </div>
-                    </div>
+                            @foreach($categoria->subcategorias as $subcategoria)
+                                <div class="form-check pl-0 mb-3  opcao-filtro">
+                                    <input
+                                        type="checkbox"
+                                        class="form-check-input filled-in"
+                                        name="subcategorias[]"
+                                        id="{{$subcategoria->nome .  '-' . $subcategoria->id}}" value={{$subcategoria->id}}
+                                        {{isset($filtro_subcategorias) && in_array($subcategoria->id, $filtro_subcategorias) ? 'checked' : ''}}
+                                        >
+                                    <label
+                                        class="form-check-label small "
+                                        for="{{$subcategoria->nome .  '-' . $subcategoria->id}}">
+                                        {{ $subcategoria->nome }}
+                                    </label>
+                                </div>
+                            @endforeach
                     @endforeach
                 </section>
 

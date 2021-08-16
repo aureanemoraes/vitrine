@@ -181,6 +181,12 @@
                     <li>
                         <a class="dropdown-item" href="{{ route('parcelamentos.index') }}">Parcelamentos</a>
                     </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('anuncios.index') }}">Anúncios</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('entidades.form') }}">Sobre nós</a>
+                    </li>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
 

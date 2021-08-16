@@ -1,8 +1,9 @@
 /node_modules
 /public/hot
 /public/storage
-/public/logos
 /public/produtos-imagens
+/public/logos-empresas
+/public/anuncios-imagens
 /storage/*.key
 /vendor
 .env

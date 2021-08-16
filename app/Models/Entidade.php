@@ -5,21 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Anuncio extends Model
+class Entidade extends Model
 {
     use HasFactory;
 
-    protected $table = 'anuncios';
+    protected $table = 'entidades';
 
     protected $fillable = [
         'nome',
-        'imagem',
-        'descricao',
-        'url',
-        'ativo'
+        'descricao'
     ];
 
     protected $casts = [
-        'ativo' => 'boolean'
     ];
 }

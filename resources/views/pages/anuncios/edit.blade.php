@@ -25,7 +25,7 @@
                     id="nome"
                     name="nome"
                     class="form-control {{$errors->has('nome') ? 'is-invalid' : ''}}"
-                    value="{{old('nome')}}"
+                    value="{{ $anuncio->nome }}"
                 />
                 <label class="form-label" for="nome">Nome</label>
 
@@ -57,7 +57,7 @@
                     id="descricao"
                     name="descricao"
                     class="form-control {{$errors->has('descricao') ? 'is-invalid' : ''}}"
-                    value="{{old('descricao')}}"
+                    value="{{ $anuncio->descricao }}"
                 />
                 <label class="form-label" for="descricao">Breve descrição imagem</label>
 
@@ -73,7 +73,7 @@
                     id="link"
                     name="link"
                     class="form-control {{$errors->has('link') ? 'is-invalid' : ''}}"
-                    value="{{old('link')}}"
+                    value="{{ $anuncio->link }}"
                 />
                 <label class="form-label" for="link">Link</label>
 
@@ -83,7 +83,14 @@
             </div>
 
             <div class="form-check form-switch mb-4">
-                <input class="form-check-input" type="checkbox" id="ativo" name="ativo" value="1" checked />
+                <input
+                class="form-check-input"
+                type="checkbox"
+                id="ativo"
+                name="ativo"
+                value="1"
+                {{ $anuncio->ativo ? 'checked' : '' }}
+                />
                 <label class="form-check-label" for="ativo" name="ativo">
                     Ativo
                 </label>
