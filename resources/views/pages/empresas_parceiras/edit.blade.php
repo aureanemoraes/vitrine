@@ -23,7 +23,7 @@
                 <div class="row row-image">
                     <div class="col-auto logo-image">
                         <img
-                            src="/logos/{{$empresa_parceira->logo}}"
+                            src="/logos-empresas/{{$empresa_parceira->logo}}"
                             alt="Logo empresa {{$empresa_parceira->nome}}"
                             style="max-width:80px;max-height: 80px;"
                         />

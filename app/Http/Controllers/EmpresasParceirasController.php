@@ -27,7 +27,7 @@ class EmpresasParceirasController extends Controller
         if($this->validaDados($request)) return $this->validaDados($request);
 
         $nomeImagem = time().'.'.$request->imagem->extension();
-        $request->imagem->move(public_path('logos'), $nomeImagem);
+        $request->imagem->move(public_path('logos-empresas'), $nomeImagem);
         $dados = $request->all();
         $dados['logo'] = $nomeImagem;
 
@@ -66,11 +66,11 @@ class EmpresasParceirasController extends Controller
         $dados = $request->all();
 
         if(isset($request->imagem)) {
-            if(File::exists(public_path("logos/$empresa_parceira->logo"))){
-                File::delete(public_path("logos/$empresa_parceira->logo"));
+            if(File::exists(public_path("logos-empresas/$empresa_parceira->logo"))){
+                File::delete(public_path("logos-empresas/$empresa_parceira->logo"));
             }
             $nomeImagem = time().'.'.$request->imagem->extension();
-            $request->imagem->move(public_path('logos'), $nomeImagem);
+            $request->imagem->move(public_path('logos-empresas'), $nomeImagem);
             $dados['logo'] = $nomeImagem;
         }
 
@@ -86,8 +86,8 @@ class EmpresasParceirasController extends Controller
     public function destroy($id)
     {
         $empresa_parceira = EmpresaParceira::findOrFail($id);
-        if(File::exists(public_path("logos/$empresa_parceira->logo"))){
-            File::delete(public_path("logos/$empresa_parceira->logo"));
+        if(File::exists(public_path("logos-empresas/$empresa_parceira->logo"))){
+            File::delete(public_path("logos-empresas/$empresa_parceira->logo"));
         }
         $empresa_parceira->delete();
 
