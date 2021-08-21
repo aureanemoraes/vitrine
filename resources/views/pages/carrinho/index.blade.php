@@ -204,7 +204,7 @@
                                         <label class="list-group-item d-flex justify-content-between align-items-center" id="forma_pagamento_label">
                                             <div class="infos">
                                                 <span>{{ $forma_pagamento->label }}</span> |
-                                                @if($forma_pagamento->desconto->porcentagem > 0)
+                                                @if(isset($forma_pagamento->desconto) && $forma_pagamento->desconto->porcentagem > 0)
                                                     <span class="text-success subtotal-produtos-formatado">
                                                         {{ $subtotal_formatado }}
                                                     </span>
@@ -239,7 +239,7 @@
                                         <label class="list-group-item d-flex justify-content-between align-items-center" id="forma_pagamento_label">
                                             <div class="infos">
                                                 <span>{{ $forma_pagamento->label }}</span> |
-                                                @if($forma_pagamento->desconto->porcentagem > 0)
+                                                @if(isset($forma_pagamento->desconto) && $forma_pagamento->desconto->porcentagem > 0)
                                                     <span class="text-success disabled subtotal-produtos-formatado">
                                                         {{ $subtotal_formatado }}
                                                     </span>
@@ -275,7 +275,7 @@
                                         <label class="list-group-item d-flex justify-content-between align-items-center" id="forma_pagamento_label">
                                             <div class="infos">
                                                 <span>{{ $forma_pagamento->label }}</span> |
-                                                @if($forma_pagamento->desconto->porcentagem > 0)
+                                                @if(isset($forma_pagamento->desconto) && $forma_pagamento->desconto->porcentagem > 0)
                                                     <span class="text-warning disabled">
                                                         <del class="subtotal-produtos-formatado">{{ $subtotal_formatado }}</del>
                                                     </span> -
@@ -317,7 +317,7 @@
                                         <label class="list-group-item d-flex justify-content-between align-items-center" id="forma_pagamento_label">
                                             <div class="infos">
                                                 <span>{{ $forma_pagamento->label }}</span> |
-                                                @if($forma_pagamento->desconto->porcentagem > 0)
+                                                @if(isset($forma_pagamento->desconto) && $forma_pagamento->desconto->porcentagem > 0)
                                                     <span class="text-warning disabled">
                                                         <del class="subtotal-produtos-formatado">{{ $subtotal_formatado }}</del>
                                                     </span> -
