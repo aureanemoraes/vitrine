@@ -15,11 +15,16 @@ class Anuncio extends Model
         'nome',
         'imagem',
         'descricao',
-        'url',
+        'link',
         'ativo'
     ];
 
     protected $casts = [
         'ativo' => 'boolean'
     ];
+
+    protected static function getAnuncios() {
+        $anuncios = Anuncio::all();
+        return $anuncios;
+    }
 }

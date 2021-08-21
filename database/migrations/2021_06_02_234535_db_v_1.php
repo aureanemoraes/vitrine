@@ -124,6 +124,7 @@ class DbV1 extends Migration
             $table->string('nome');
             $table->string('imagem');
             $table->string('descricao')->nullable();
+            $table->string('link')->nullable();
             $table->string('url')->nullable();
             $table->tinyInteger('ativo')->default(1);
             $table->timestamps();

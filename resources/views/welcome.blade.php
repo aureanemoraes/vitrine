@@ -77,13 +77,31 @@
 
 @section('content')
     <section class="anuncios">
+        @php($anuncios = App\Models\Anuncio::getAnuncios())
         <div
         id="carouselDarkVariant"
         class="carousel slide carousel-fade carousel-dark"
         data-mdb-ride="carousel"
         >
             <div class="carousel-indicators">
-                <button
+                @foreach($anuncios as $key => $anuncio)
+                    @if($key == 0)
+                        <button
+                        data-mdb-target="#carouselDarkVariant"
+                        data-mdb-slide-to="{{$key}}"
+                        class="active"
+                        aria-current="true"
+                        aria-label="Slide {{$key}}"
+                        ></button>
+                    @else
+                        <button
+                        data-mdb-target="#carouselDarkVariant"
+                        data-mdb-slide-to="{{$key}}"
+                        aria-label="Slide {{$key}}"
+                        ></button>
+                    @endif
+                @endforeach
+                {{-- <button
                 data-mdb-target="#carouselDarkVariant"
                 data-mdb-slide-to="0"
                 class="active"
@@ -94,11 +112,32 @@
                 data-mdb-target="#carouselDarkVariant"
                 data-mdb-slide-to="1"
                 aria-label="Slide 1"
-                ></button>
+                ></button> --}}
             </div>
 
             <div class="carousel-inner">
-                <div class="carousel-item active">
+                @foreach($anuncios as $key => $anuncio)
+                    @if($key == 0)
+                        @php($carouselLcass = "carousel-item active")
+                    @else
+                        @php($carouselLcass = "carousel-item")
+                    @endif
+                    <div class="{{$carouselLcass}}">
+                        <a href="{{$anuncio->link}}">
+                            <img
+                                src="{{ asset('anuncios-imagens/' . $anuncio->imagem) }}"
+                                class="d-block w-100"
+                                alt="{{$anuncio->descricao}}"
+                                style="height: 300px; object-fit:fit;"
+                            />
+                        </a>
+                        <div class="carousel-caption d-none d-md-block">
+                            {{-- <h5>First slide label</h5>
+                            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> --}}
+                        </div>
+                    </div>
+                @endforeach
+                {{-- <div class="carousel-item active">
                     <img
                         src="{{ asset('produtos-imagens/banner-site.png') }}"
                         class="d-block w-100"
@@ -108,21 +147,10 @@
                     <div class="carousel-caption d-none d-md-block">
                         {{-- <h5>First slide label</h5>
                         <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> --}}
-                    </div>
-                </div>
+                    {{-- </div>
+                </div>  --}}
 
-                <div class="carousel-item">
-                    <img
-                        src="{{ asset('produtos-imagens/carousel2.png') }}"
-                        class="d-block w-100"
-                        alt="..."
-                        style="height: 300px; object-fit:contain; background-color: #53aeda"
-                    />
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Second slide label</h5>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                </div>
+
             </div>
 
             <button
