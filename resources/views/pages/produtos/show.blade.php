@@ -115,8 +115,8 @@
                 <div class="p-4">
                 <h5 class="produto-nome">{{$produto->nome}}</h5>
                     <div class="mb-3">
-                        @if(isset($produto->subcategoria->categoria))
-                            <span class="badge bg-secondary">{{ $produto->subcategoria->categoria->nome }}</span>
+                        @if(isset($produto->categoria))
+                            <span class="badge bg-secondary">{{ $produto->categoria->nome }}</span>
                         @endif
                         @if(isset($produto->subcategoria))
                             <span class="badge bg-info">{{ $produto->subcategoria->nome }}</span>
