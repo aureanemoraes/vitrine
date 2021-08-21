@@ -115,7 +115,7 @@ class Produto extends Model
     }
 
     public function subcategoria() {
-        return $this->belongsTo(SubCategoria::class);
+        return $this->belongsTo(Subcategoria::class);
     }
 
     public function empresa_parceira() {
