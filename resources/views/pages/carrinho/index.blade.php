@@ -208,6 +208,10 @@
                                                     <span class="text-success subtotal-produtos-formatado">
                                                         {{ $subtotal_formatado }}
                                                     </span>
+                                                @else
+                                                    <span class="text-success" id={{ 'subtotal-produtos-desconto-formatado-' . $forma_pagamento->id }}>
+                                                        <strong>{{$subtotal_formatado}}</strong>
+                                                    </span>
                                                 @endif
                                             </div>
                                             <div class="radio-buttons">
@@ -242,6 +246,10 @@
                                                 @if(isset($forma_pagamento->desconto) && $forma_pagamento->desconto->porcentagem > 0)
                                                     <span class="text-success disabled subtotal-produtos-formatado">
                                                         {{ $subtotal_formatado }}
+                                                    </span>
+                                                @else
+                                                    <span class="text-success" id={{ 'subtotal-produtos-desconto-formatado-' . $forma_pagamento->id }}>
+                                                        <strong>{{$subtotal_formatado}}</strong>
                                                     </span>
                                                 @endif
                                             </div>
@@ -291,6 +299,10 @@
                                                     <span class="text-success" id={{ 'subtotal-produtos-desconto-formatado-' . $forma_pagamento->id }}>
                                                         <strong>{{$subtotal_com_desconto_formatado}}</strong>
                                                     </span>
+                                                @else
+                                                    <span class="text-success" id={{ 'subtotal-produtos-desconto-formatado-' . $forma_pagamento->id }}>
+                                                        <strong>{{$subtotal_formatado}}</strong>
+                                                    </span>
                                                 @endif
                                             </div>
                                             <div class="radio-buttons">
@@ -336,6 +348,10 @@
                                                     @endif
                                                     <span class="text-success" id={{ 'subtotal-produtos-desconto-formatado-' . $forma_pagamento->id }}>
                                                         <strong>{{$subtotal_com_desconto_formatado}}</strong>
+                                                    </span>
+                                                @else
+                                                    <span class="text-success" id={{ 'subtotal-produtos-desconto-formatado-' . $forma_pagamento->id }}>
+                                                        <strong>{{$subtotal_formatado}}</strong>
                                                     </span>
                                                 @endif
                                             </div>
