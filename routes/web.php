@@ -50,6 +50,8 @@ Route::get('produtos/encontrar/pesquisar', [ProdutosController::class, 'encontra
     ->name('produtos.encontrar.pesquisa');
 Route::get('produtos/encontrar/filtro', [ProdutosController::class, 'encontrar_por_filtro'])
     ->name('produtos.encontrar.filtro');
+Route::get('produtos/ordenacao/{tipo}', [ProdutosController::class, 'ordenacao'])
+    ->name('produtos.ordenacao');
 
 Route::get('carrinho', [CarrinhoController::class, 'index'])->name('carrinho.index');
 

@@ -189,6 +189,7 @@ class ProdutosController extends Controller
         $categorias = $request->query('categorias');
         $subcategorias = $request->query('subcategorias');
         $empresas_parceiras = $request->query('empresas_parceiras');
+        $ordenacao =  $request->query('ordenacao');
 
         if(isset($promocao)) {
             $resultados = Produto::where('desconto', '!=', null)->where('desconto', '>', 0);
@@ -215,11 +216,38 @@ class ProdutosController extends Controller
                 $resultados = Produto::whereIn('empresa_parceira_id', $empresas_parceiras);
         }
 
-        $resultados = $resultados->orderBy('desconto', 'desc')
-            ->orderBy('relevante', 'desc')
-            ->orderBy('valor', 'asc')
-            ->orderBy('disponibilidade', 'desc')
-            ->paginate();
+        if(isset($ordenacao)) {
+            if(isset($resultados)) {
+                switch($ordenacao) {
+                    case 1: // Relevantes
+                        $resultados = $resultados->orderBy('relevante', 'desc');
+                        break;
+                    case 2: // A-Z
+                        $resultados = $resultados->orderBy('nome', 'asc');
+                        break;
+                    case 3: // Z-A
+                        $resultados = $resultados->orderBy('nome', 'desc');
+                        break;
+                    case 4: // Maior preço - Menor preço
+                        $resultados = $resultados->orderBy('valor', 'desc');
+                        break;
+                    case 5: // Menor preço - Maior preço
+                        $resultados = $resultados->orderBy('valor', 'asc');
+                        break;
+                }
+
+                $resultados = $resultados->orderBy('desconto', 'desc')
+                    ->orderBy('valor', 'asc')
+                    ->orderBy('disponibilidade', 'desc')
+                    ->paginate();
+            }
+        } else {
+            $resultados = $resultados->orderBy('desconto', 'desc')
+                ->orderBy('relevante', 'desc')
+                ->orderBy('valor', 'asc')
+                ->orderBy('disponibilidade', 'desc')
+                ->paginate();
+        }
 
         return view('pages.produtos.index')->with([
             'produtos' => $resultados,
@@ -228,5 +256,11 @@ class ProdutosController extends Controller
             'filtro_subcategorias' => $subcategorias,
             'filtro_empresas_parceiras' => $empresas_parceiras
         ]);
+    }
+
+    public function ordenacao($tipo) {
+        $rota_atual = url()->previous() . "&ordenacao=$tipo";
+        return redirect($rota_atual);
+
     }
 }

@@ -16,17 +16,20 @@
                   Ordenar por:
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li>
+                    <a class="dropdown-item" href="{{ route('produtos.ordenacao', 1) }}">Mais relevantes - Menos relevantes</a>
+                    </li>
                   <li>
-                    <a class="dropdown-item" href="#">(A-Z)</a>
+                    <a class="dropdown-item" href="{{ route('produtos.ordenacao', 2) }}">(A-Z)</a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">(Z-A)</a>
+                    <a class="dropdown-item" href="{{ route('produtos.ordenacao', 3) }}">(Z-A)</a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">(Maior preço - Menor preço)</a>
+                    <a class="dropdown-item" href="{{ route('produtos.ordenacao', 4) }}">(Maior preço - Menor preço)</a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">(Menor preço - Maior preço)</a>
+                    <a class="dropdown-item" href="{{ route('produtos.ordenacao', 5) }}">(Menor preço - Maior preço)</a>
                   </li>
                 </ul>
               </li>
