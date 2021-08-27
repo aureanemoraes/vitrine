@@ -50,11 +50,17 @@
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card info-produto">
                         <div class="view overlay produto-imagem">
-                            <img
-                                src="{{asset('produtos-imagens/' . $produto->imagens[0])}}"
-                                class="card-img-top"
-                                alt=""
-                            >
+                            @if(isset($produto->imagens[0]))
+                                <img
+                                    src="{{asset('produtos-imagens/' . $produto->imagens[0])}}"
+                                    class="card-img-top"
+                                    alt=""
+                                >
+                            @else
+                                <div class="border d-flex align-items-center justify-content-center sem-imagem">
+                                    <p>Sem imagem</p>
+                                </div>
+                            @endif
                             <a href="{{route('produtos.show', $produto->id)}}" title="{{$produto->nome}}">
                             <div class="mask rgba-white-slight"></div>
                             </a>

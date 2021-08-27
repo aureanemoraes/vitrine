@@ -24,92 +24,98 @@
     <div class="container dark-grey-text mt-5">
         <div class="row wow fadeIn">
             <div class="col-md-6 mb-4">
-                <div
-                    id="produtoImagens"
-                    class="carousel slide carousel-fade carousel-dark"
-                    data-mdb-ride="carousel"
-                >
-                <div class="carousel-indicators">
-                    @if(count($produto->imagens) > 0)
-                        @php($first = false)
-                        @php($i=1)
-                        @php($j=0)
-                        @foreach($produto->imagens as $imagem)
-                            @if($first === false)
-                                <button
-                                    type="button"
-                                    class="active"
-                                    aria-current="true"
-                                    data-mdb-target="#produtoImagens"
-                                    data-mdb-slide-to="{{$j}}"
-                                    aria-label="Slide {{$i}}"
-                                ></button>
-                                @php($first = true)
+                @if(isset($produtos->imagens) && count($produtos->imagens) > 0)
+                    <div
+                        id="produtoImagens"
+                        class="carousel slide carousel-fade carousel-dark"
+                        data-mdb-ride="carousel"
+                    >
+                        <div class="carousel-indicators">
+                            @if(isset($produtos->imagens) && count($produto->imagens) > 0)
+                                @php($first = false)
+                                @php($i=1)
+                                @php($j=0)
+                                @foreach($produto->imagens as $imagem)
+                                    @if($first === false)
+                                        <button
+                                            type="button"
+                                            class="active"
+                                            aria-current="true"
+                                            data-mdb-target="#produtoImagens"
+                                            data-mdb-slide-to="{{$j}}"
+                                            aria-label="Slide {{$i}}"
+                                        ></button>
+                                        @php($first = true)
+                                    @else
+                                        <button
+                                            type="button"
+                                            data-mdb-target="#produtoImagens"
+                                            data-mdb-slide-to="{{$j}}"
+                                            aria-label="Slide {{$i}}"
+                                        ></button>
+                                    @endif
+                                    @php($i++)
+                                    @php($j++)
+                                @endforeach
                             @else
-                                <button
-                                    type="button"
-                                    data-mdb-target="#produtoImagens"
-                                    data-mdb-slide-to="{{$j}}"
-                                    aria-label="Slide {{$i}}"
-                                ></button>
                             @endif
-                            @php($i++)
-                            @php($j++)
-                        @endforeach
-                    @else
-                    @endif
-                </div>
-                    <div class="carousel-inner">
-                        @if(count($produto->imagens) > 0)
-                            @php($first = false)
-                            @foreach($produto->imagens as $imagem)
-                                @if($first === false)
-                                    <div class="carousel-item active">
-                                        <div class="d-flex justify-content-center">
-                                            <img
-                                                src="{{ asset('produtos-imagens/' . $imagem) }}"
-                                                class="img-fluid"
-                                                alt="..."
-                                                style="height: 400px; width: 400px"
-                                            />
+                        </div>
+                        <div class="carousel-inner">
+                            @if(isset($produtos->imagens) && count($produto->imagens) > 0)
+                                @php($first = false)
+                                @foreach($produto->imagens as $imagem)
+                                    @if($first === false)
+                                        <div class="carousel-item active">
+                                            <div class="d-flex justify-content-center">
+                                                <img
+                                                    src="{{ asset('produtos-imagens/' . $imagem) }}"
+                                                    class="img-fluid"
+                                                    alt="..."
+                                                    style="height: 400px; width: 400px"
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
-                                    @php($first = true)
-                                @else
-                                    <div class="carousel-item">
-                                        <div class="d-flex justify-content-center">
-                                            <img
-                                                src="{{ asset('produtos-imagens/' . $imagem) }}"
-                                                class="img-fluid"
-                                                style="height: 400px; width: 400px"
-                                                alt="..."
-                                            />
+                                        @php($first = true)
+                                    @else
+                                        <div class="carousel-item">
+                                            <div class="d-flex justify-content-center">
+                                                <img
+                                                    src="{{ asset('produtos-imagens/' . $imagem) }}"
+                                                    class="img-fluid"
+                                                    style="height: 400px; width: 400px"
+                                                    alt="..."
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
-                                @endif
-                            @endforeach
-                        @else
-                        @endif
+                                    @endif
+                                @endforeach
+                            @else
+                            @endif
+                        </div>
+                        <button
+                        class="carousel-control-prev"
+                        type="button"
+                        data-mdb-target="#produtoImagens"
+                        data-mdb-slide="prev"
+                        >
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button
+                        class="carousel-control-next"
+                        type="button"
+                        data-mdb-target="#produtoImagens"
+                        data-mdb-slide="next"
+                        >
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
                     </div>
-                <button
-                  class="carousel-control-prev"
-                  type="button"
-                  data-mdb-target="#produtoImagens"
-                  data-mdb-slide="prev"
-                >
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
-                </button>
-                <button
-                  class="carousel-control-next"
-                  type="button"
-                  data-mdb-target="#produtoImagens"
-                  data-mdb-slide="next"
-                >
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
-                </button>
-              </div>
+                @else
+                    <div class="border d-flex align-items-center justify-content-center sem-imagem">
+                        <p>Sem imagem</p>
+                    </div>
+                @endif
             </div>
             <div class="col-md-6 mb-4">
                 <div class="p-4">

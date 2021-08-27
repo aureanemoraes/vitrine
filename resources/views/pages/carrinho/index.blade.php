@@ -33,6 +33,10 @@
 
         }
 
+        .disabled {
+            color: gray !important;
+        }
+
     </style>
 @stop
 
@@ -201,37 +205,44 @@
                             @if(count($formas_pagamento) > 0)
                                 @foreach($formas_pagamento as $forma_pagamento)
                                     @if($forma_pagamento->id === 4)
+                                        @php($parcelamento = App\Models\Produto::parcelasProduto($subtotal))
                                         <label class="list-group-item d-flex justify-content-between align-items-center" id="forma_pagamento_label">
                                             <div class="infos">
-                                                <span>{{ $forma_pagamento->label }}</span> |
-                                                @if(isset($forma_pagamento->desconto) && $forma_pagamento->desconto->porcentagem > 0)
-                                                    <span class="text-success subtotal-produtos-formatado">
-                                                        {{ $subtotal_formatado }}
-                                                    </span>
-                                                @else
+                                                @if(isset($parcelamento))
+                                                    <span>{{ $forma_pagamento->label }}</span> |
                                                     <span class="text-success" id={{ 'subtotal-produtos-desconto-formatado-' . $forma_pagamento->id }}>
                                                         <strong>{{$subtotal_formatado}}</strong>
+                                                    </span>
+                                                @else
+                                                    <span><del>{{ $forma_pagamento->label }}</del></span> |
+                                                    <span class="text-success" id={{ 'subtotal-produtos-desconto-formatado-' . $forma_pagamento->id }}>
+                                                        <strong><del>{{$subtotal_formatado}}</del></strong>
                                                     </span>
                                                 @endif
                                             </div>
                                             <div class="radio-buttons">
-                                                @php($parcelamento = App\Models\Produto::parcelasProduto($subtotal))
                                                 @if(isset($parcelamento))
                                                     @php($parcelamento = (object) $parcelamento)
                                                     @php($texto_parcelas = $parcelamento->parcelas  . 'x de ' . $parcelamento->valor_parcela_formatado)
                                                     <span id="parcelas">
                                                         {{$texto_parcelas}}
                                                     </span>
+                                                    <input
+                                                    class="form-check-input me-1"
+                                                    type="radio"
+                                                    value="{{ $forma_pagamento->label . ' - ' . $subtotal_formatado . ' - ' . $texto_parcelas }}"
+                                                    name="forma_pagamento"
+                                                    />
                                                 @else
                                                 <span id="parcelas">
                                                 </span>
-                                                @endif
                                                 <input
                                                 class="form-check-input me-1"
                                                 type="radio"
-                                                value="{{ $forma_pagamento->label . ' - ' . $subtotal_formatado . ' - ' . $texto_parcelas }}"
                                                 name="forma_pagamento"
+                                                disabled
                                                 />
+                                                @endif
                                             </div>
                                         </label>
                                     @else
@@ -244,7 +255,7 @@
                                             <div class="infos">
                                                 <span>{{ $forma_pagamento->label }}</span> |
                                                 @if(isset($forma_pagamento->desconto) && $forma_pagamento->desconto->porcentagem > 0)
-                                                    <span class="text-success disabled subtotal-produtos-formatado">
+                                                    <span class="text-success subtotal-produtos-formatado">
                                                         {{ $subtotal_formatado }}
                                                     </span>
                                                 @else
@@ -280,14 +291,18 @@
                             @if(count($formas_pagamento) > 0)
                                 @foreach($formas_pagamento as $forma_pagamento)
                                     @if($forma_pagamento->id === 4)
-                                        <label class="list-group-item d-flex justify-content-between align-items-center" id="forma_pagamento_label">
+                                        @php($parcelamento = App\Models\Produto::parcelasProduto($subtotal_com_desconto))
+                                        <label
+                                        class="list-group-item d-flex justify-content-between align-items-center {{!isset($parcelamento) ? 'disabled' : ''}}"
+                                        id="forma_pagamento_label"
+                                        >
                                             <div class="infos">
                                                 <span>{{ $forma_pagamento->label }}</span> |
                                                 @if(isset($forma_pagamento->desconto) && $forma_pagamento->desconto->porcentagem > 0)
-                                                    <span class="text-warning disabled">
+                                                    <span class="text-warning">
                                                         <del class="subtotal-produtos-formatado">{{ $subtotal_formatado }}</del>
                                                     </span> -
-                                                    <span class="text-primary disabled">
+                                                    <span class="text-primary">
                                                         {{ $forma_pagamento->desconto->porcentagem_label }}
                                                     </span> =
                                                     @php(
@@ -306,23 +321,28 @@
                                                 @endif
                                             </div>
                                             <div class="radio-buttons">
-                                                @php($parcelamento = App\Models\Produto::parcelasProduto($subtotal_com_desconto))
                                                 @if(isset($parcelamento))
                                                     @php($parcelamento = (object) $parcelamento)
                                                     @php($texto_parcelas = $parcelamento->parcelas  . 'x de ' . $parcelamento->valor_parcela_formatado)
                                                     <span id="parcelas">
                                                         {{$texto_parcelas}}
                                                     </span>
+                                                    <input
+                                                    class="form-check-input me-1"
+                                                    type="radio"
+                                                    value="{{ $forma_pagamento->label . ' - ' . $subtotal_com_desconto_formatado . ' - ' . $texto_parcelas }}"
+                                                    name="forma_pagamento"
+                                                    />
                                                 @else
-                                                <span id="parcelas">
-                                                </span>
+                                                    <span id="parcelas">
+                                                    </span>
+                                                    <input
+                                                    class="form-check-input me-1"
+                                                    type="radio"
+                                                    name="forma_pagamento"
+                                                    disabled
+                                                    />
                                                 @endif
-                                                <input
-                                                class="form-check-input me-1"
-                                                type="radio"
-                                                value="{{ $forma_pagamento->label . ' - ' . $subtotal_com_desconto_formatado . ' - ' . $texto_parcelas }}"
-                                                name="forma_pagamento"
-                                                />
                                             </div>
                                         </label>
                                     @else
@@ -330,10 +350,10 @@
                                             <div class="infos">
                                                 <span>{{ $forma_pagamento->label }}</span> |
                                                 @if(isset($forma_pagamento->desconto) && $forma_pagamento->desconto->porcentagem > 0)
-                                                    <span class="text-warning disabled">
+                                                    <span class="text-warning">
                                                         <del class="subtotal-produtos-formatado">{{ $subtotal_formatado }}</del>
                                                     </span> -
-                                                    <span class="text-primary disabled">
+                                                    <span class="text-primary">
                                                         {{ $forma_pagamento->desconto->porcentagem_label }}
                                                     </span> =
                                                     @php(
