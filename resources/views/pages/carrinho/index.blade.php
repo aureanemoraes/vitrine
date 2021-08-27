@@ -77,7 +77,13 @@
                                     @php($produto = App\Models\Produto::produtoInfo($produto_id))
                                     @if(isset($produto))
                                         <th scope="row">
-                                            <img src="{{ asset('produtos-imagens/' . $produto->imagens[0]) }}" alt="" class="img-fluid z-depth-0" width="80px" height="80px">
+                                            @if(isset($produto->imagens[0]))
+                                                <img src="{{ asset('produtos-imagens/' . $produto->imagens[0]) }}" alt="" class="img-fluid z-depth-0" width="80px" height="80px">
+                                            @else
+                                                <div class="border d-flex align-items-center justify-content-center sem-imagem">
+                                                    <p>Sem imagem</p>
+                                                </div>
+                                            @endif
                                         </th>
                                         <td>
                                             <h6 class="mt-3">
