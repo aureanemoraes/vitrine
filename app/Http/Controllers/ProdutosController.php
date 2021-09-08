@@ -98,11 +98,12 @@ class ProdutosController extends Controller
             $dados['desconto'] = null;
         }
 
+
         if(isset($request->imagens) && count($request->imagens) > 0) {
             $dados_imagens = $produto->imagens;
             if($request->hasFile('imagens')) {
                 foreach($request->imagens as $imagem) {
-                    $nomeImagem = time().'.'.$imagem->extension();
+                    $nomeImagem = $imagem->getClientOriginalName().'-'.time().'.'.$imagem->getClientOriginalExtension();
                     $imagem->move(public_path('produtos-imagens'), $nomeImagem);
                     $dados_imagens[] = $nomeImagem;
                 }
@@ -117,6 +118,7 @@ class ProdutosController extends Controller
 
         $produto->fill($dados)->save();
 
+
         return view('pages.produtos.show')->with([
             'produto' => $produto
         ]);
@@ -127,7 +129,7 @@ class ProdutosController extends Controller
     {
         $produto = Produto::findOrFail($id);
 
-        if(count($produto->imagens) > 0) {
+        if(isset($produto->imagens) && count($produto->imagens) > 0) {
             foreach($produto->imagens as $imagem) {
                 if(File::exists(public_path("produtos-imagens/$imagem"))){
                     File::delete(public_path("produtos-imagens/$imagem"));

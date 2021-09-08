@@ -18,10 +18,11 @@
                         />
                         </div>
                         @endforeach
+                        @for($i=0 ; $i <= (4 - count($produto->imagens)) ; $i++)
+                            <i class="far fa-image fa-5x image-{{$i}}"></i>
+                        @endfor
                     @endif
-                    @for($i=0 ; $i <= (4 - count($produto->imagens)) ; $i++)
-                        <i class="far fa-image fa-5x image-{{$i}}"></i>
-                    @endfor
+
                 </div>
                 <div class="row row-images">
                     @if(isset($produto->imagens))
@@ -240,7 +241,6 @@
                             title: 'Item excluído!',
                             showConfirmButton: false,
                         });
-                        console.log(data);
                         return 1;
                     },
                     error: function(data) {
@@ -257,28 +257,41 @@
     }
     // On change
     $('#imagens').change(function(){
-        let quantidade_disponivel = 5 - {!! count($produto->imagens) !!};
+        let imagens = {!! json_encode($produto->imagens) !!}
+        let quantidade_disponivel = 5;
+
+        if(imagens != null) {
+            console.log('a');
+            let imagens_produtos = imagens.length;
+            let quantidade_disponivel = 5 - imagens_produtos;
+        } 
+
+        
         if(this.files.length > 0 && this.files.length <= quantidade_disponivel) {
             $('.not-uploaded').remove();
-            for(let i=0; i<this.files.length; i++) {
-                let file = this.files[i];
-                if (file) {
-                    let reader = new FileReader();
-                    reader.onload = function(event){
-                        $(`.image-${i}`).remove();
-                        $('.preview').append(`
-                            <img src="${event.target.result}" alt="pic" style="max-width:100px;max-height: 100px;" class="not-uploaded"/>
-                        `);
+            if(quantidade_disponivel > 0) {
+                for(let i=0; i<this.files.length; i++) {
+                    let file = this.files[i];
+                    if (file) {
+                        let reader = new FileReader();
+                        reader.onload = function(event){
+                            $(`.image-${i}`).remove();
+                            $('.preview').append(`
+                                <img src="${event.target.result}" alt="pic" style="max-width:100px;max-height: 100px;" class="not-uploaded"/>
+                            `);
+                        }
+                        reader.readAsDataURL(file);
                     }
-                    reader.readAsDataURL(file);
                 }
             }
         } else {
             $('#imagens').val(null);
-            for(let i=0; i<quantidade_disponivel; i++) {
-                $('.not-uploaded').remove();
-                $(`.image-${i}`).remove();
-                $('.preview').append(`<i class="far fa-image fa-5x image-${i}"></i>`);
+            if(quantidade_disponivel > 0) {
+                for(let i=0; i<quantidade_disponivel; i++) {
+                    $('.not-uploaded').remove();
+                    $(`.image-${i}`).remove();
+                    $('.preview').append(`<i class="far fa-image fa-5x image-${i}"></i>`);
+                }
             }
         }
     });
@@ -343,7 +356,6 @@
                     }
                 },
                 error: function(data) {
-                    console.log(data);
                 }
             });
         } else {
@@ -352,7 +364,6 @@
     });
 
     $(function() {
-        console.log(produto);
         $('#categoria_id').select2({});
         $('#subcategoria_id').select2({});
 
