@@ -85,20 +85,22 @@
         >
             <div class="carousel-indicators">
                 @foreach($anuncios as $key => $anuncio)
-                    @if($key == 0)
-                        <button
-                        data-mdb-target="#carouselDarkVariant"
-                        data-mdb-slide-to="{{$key}}"
-                        class="active"
-                        aria-current="true"
-                        aria-label="Slide {{$key}}"
-                        ></button>
-                    @else
-                        <button
-                        data-mdb-target="#carouselDarkVariant"
-                        data-mdb-slide-to="{{$key}}"
-                        aria-label="Slide {{$key}}"
-                        ></button>
+                    @if($anuncio->ativo)
+                        @if($key == 0)
+                            <button
+                            data-mdb-target="#carouselDarkVariant"
+                            data-mdb-slide-to="{{$key}}"
+                            class="active"
+                            aria-current="true"
+                            aria-label="Slide {{$key}}"
+                            ></button>
+                        @else
+                            <button
+                            data-mdb-target="#carouselDarkVariant"
+                            data-mdb-slide-to="{{$key}}"
+                            aria-label="Slide {{$key}}"
+                            ></button>
+                        @endif
                     @endif
                 @endforeach
                 {{-- <button
@@ -117,25 +119,27 @@
 
             <div class="carousel-inner">
                 @foreach($anuncios as $key => $anuncio)
-                    @if($key == 0)
-                        @php($carouselLcass = "carousel-item active")
-                    @else
-                        @php($carouselLcass = "carousel-item")
-                    @endif
-                    <div class="{{$carouselLcass}}">
-                        <a href="{{$anuncio->link}}">
-                            <img
-                                src="{{ asset('anuncios-imagens/' . $anuncio->imagem) }}"
-                                class="d-block w-100"
-                                alt="{{$anuncio->descricao}}"
-                                style="height: 300px; object-fit:fit;"
-                            />
-                        </a>
-                        <div class="carousel-caption d-none d-md-block">
-                            {{-- <h5>First slide label</h5>
-                            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> --}}
+                    @if($anuncio->ativo)
+                        @if($key == 0)
+                            @php($carouselLcass = "carousel-item active")
+                        @else
+                            @php($carouselLcass = "carousel-item")
+                        @endif
+                        <div class="{{$carouselLcass}}">
+                            <a href="{{$anuncio->link}}">
+                                <img
+                                    src="{{ asset('anuncios-imagens/' . $anuncio->imagem) }}"
+                                    class="d-block w-100"
+                                    alt="{{$anuncio->descricao}}"
+                                    style="height: 300px; object-fit:fit;"
+                                />
+                            </a>
+                            <div class="carousel-caption d-none d-md-block">
+                                {{-- <h5>First slide label</h5>
+                                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p> --}}
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 @endforeach
                 {{-- <div class="carousel-item active">
                     <img

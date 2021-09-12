@@ -16,9 +16,10 @@
 
 @section('content')
     <div class="container">
-        <h3>Novo produto</h3>
-        <form action="{{ route('anuncios.store') }}" method="POST" enctype="multipart/form-data" id="anuncio-form">
+        <h3>Alterar anúncio</h3>
+        <form action="{{ route('anuncios.update', $anuncio->id) }}" method="POST" enctype="multipart/form-data" id="anuncio-form">
             @csrf
+            @method('PUT')
             <div class="form-outline {{$errors->has('nome') ? 'mb-5' : 'mb-4'}}">
                 <input
                     type="text"

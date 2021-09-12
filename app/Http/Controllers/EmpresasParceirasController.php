@@ -30,9 +30,11 @@ class EmpresasParceirasController extends Controller
         $request->imagem->move(public_path('logos-empresas'), $nomeImagem);
         $dados = $request->all();
         $dados['logo'] = $nomeImagem;
+        $empresa_parceira = EmpresaParceira::create($dados);
 
         return view('pages.empresas_parceiras.show')->with([
-            'empresa_parceira' => EmpresaParceira::create($dados)
+            'empresa_parceira' => $empresa_parceira,
+            'produtos' => Produto::where('empresa_parceira_id', $empresa_parceira->id)->paginate()
         ]);
     }
 

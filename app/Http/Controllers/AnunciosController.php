@@ -38,7 +38,36 @@ class AnunciosController extends Controller
         return view('pages.anuncios.index')->with([
             'anuncios' => Anuncio::all()
         ]);
+    }
 
+    public function update( $id, Request $request)
+    {
+        if($this->validaDados($request, 'update')) return $this->validaDados($request);
+        $dados = $request->all();
+
+        if(isset($request->imagem)) {
+            if($request->hasFile('imagem')) {
+                $imagem = $request->file('imagem');
+                $nomeImagem = $imagem->getClientOriginalName().'-'.time().'.'.$imagem->getClientOriginalExtension();
+                $imagem->move(public_path('anuncios-imagens'), $nomeImagem);
+                $dados['imagem'] = $nomeImagem;
+            }
+        }
+
+        $anuncio = Anuncio::findOrFail($id);
+
+        if(File::exists(public_path("anuncios-imagens/$anuncio->imagem"))){
+            File::delete(public_path("anuncios-imagens/$anuncio->imagem"));
+        }
+
+        !isset($dados['ativo']) ? $dados['ativo'] = false : '';
+
+        $anuncio->fill($dados);
+        $anuncio->save();
+
+        return view('pages.anuncios.index')->with([
+            'anuncios' => Anuncio::all()
+        ]);
     }
 
     public function edit($id)
@@ -59,14 +88,25 @@ class AnunciosController extends Controller
         return true;
     }
 
-    public function validaDados($request) {
-        $validator = Validator::make($request->all(), [
-            'nome' => 'nullable|string',
-            'descricao' => 'nullable|string',
-            'imagem' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // validação de imagem
-            'ativo' => 'nullable|integer',
-            'url' => 'nullable|string'
-        ]);
+    public function validaDados($request, $tipo='create') {
+        if($tipo == 'create') {
+            $validator = Validator::make($request->all(), [
+                'nome' => 'nullable|string',
+                'descricao' => 'nullable|string',
+                'imagem' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // validação de imagem
+                'ativo' => 'nullable|integer',
+                'url' => 'nullable|string'
+            ]);
+        } else {
+            $validator = Validator::make($request->all(), [
+                'nome' => 'nullable|string',
+                'descricao' => 'nullable|string',
+                'imagem' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // validação de imagem
+                'ativo' => 'nullable|integer',
+                'url' => 'nullable|string'
+            ]);
+        }
+
 
         if ($validator->fails()) {
             return redirect(url()->previous())
