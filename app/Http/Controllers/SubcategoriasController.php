@@ -56,9 +56,15 @@ class SubcategoriasController extends Controller
 
     public function destroy($id)
     {
-        SubCategoria::findOrFail($id)->delete();
+        $subcategoria = SubCategoria::findOrFail($id);
 
-        return response()->json(['data' => 'Item deleted.'], 200);
+        if(count($subcategoria->produtos) > 0) {
+            return response()->json(['data' => 'Item can not be deleted.'], 405);
+        } else {
+            $subcategoria->delete();
+            return response()->json(['data' => 'Item deleted.'], 200);
+        }
+
     }
 
     public function find($categoria_id)
