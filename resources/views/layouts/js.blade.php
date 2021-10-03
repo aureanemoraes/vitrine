@@ -18,7 +18,7 @@
 
 <script>
     let spinnerHTML = `
-        <div class="spinner-border text-success" role="status">
+        <div class="spinner-border spinner-border-sm" role="status">
             <span class="sr-only">Salvando...</span>
         </div>
     `;
@@ -28,70 +28,55 @@
     `;
 
     function enviarFormulario(method, url, form_id=null) {
-        if (method === 'delete') {
+        let form = `#${form_id}`;
+        $(form).submit(e => {
+            // ADICIONAR SPINNER
+            $('#submit').html(spinnerHTML);
+            $('#submit').attr('disabled', 'disabled');
+
+            e.preventDefault();
+            let entries = $(form).serializeArray();
+            let formFields = [];
+            for(const entry of entries) {
+                formFields.push(entry.name);
+            }
+
             $.ajax({
                 method: method,
-                data: {'_token':  "{{ csrf_token() }}" },
                 url: url,
+                data: $(form).serialize(),
                 success: function (data) {
+                    $('#submit').html(successIcon);
+                    if(method == 'post') {
+                        localStorage.setItem('item-criado', true);
+                    } else if(method == 'put') {
+                        localStorage.setItem('item-alterado', true);
+                    }
+
                     setTimeout(location.reload.bind(location), 1000);
-                    return 1;
                 },
                 error: function(data) {
-                    return 0;
-                }
-            });
-        } else {
-            let form = `#${form_id}`;
-            $(form).submit(e => {
-                // ADICIONAR SPINNER
-                $('#submit').html(spinnerHTML);
-                $('#submit').attr('disabled', 'disabled');
+                    $('#submit').html('Salvar');
+                    $('#submit').removeAttr('disabled');
 
-                e.preventDefault();
-                let entries = $(form).serializeArray();
-                let formFields = [];
-                for(const entry of entries) {
-                    formFields.push(entry.name);
-                }
+                    data = data.responseJSON;
 
-                $.ajax({
-                    method: method,
-                    url: url,
-                    data: $(form).serialize(),
-                    success: function (data) {
-                        $('#submit').html(successIcon);
-                        if(method == 'post') {
-                            localStorage.setItem('item-criado', true);
-                        } else if(method == 'put') {
-                            localStorage.setItem('item-alterado', true);
-                        }
+                    console.log(data);
+                    $(':input').removeClass('is-invalid');
+                    $(':input').addClass('is-valid');
 
-                        setTimeout(location.reload.bind(location), 1000);
-                    },
-                    error: function(data) {
-                        $('#submit').html('Salvar');
-                        $('#submit').removeAttr('disabled');
-
-                        data = data.responseJSON;
-
-                        console.log(data);
-                        $(':input').removeClass('is-invalid');
+                    if(data) {
                         $(':input').addClass('is-valid');
-
-                        if(data) {
-                            $(':input').addClass('is-valid');
-                            for (const [key, value] of Object.entries(data)) {
-                                if(formFields.includes(key)) {
-                                    $(`#${key}`).addClass('is-invalid');
-                                    $(`#${key}-feedback`).text(`${value}`);
-                                }
+                        for (const [key, value] of Object.entries(data)) {
+                            if(formFields.includes(key)) {
+                                $(`#${key}`).addClass('is-invalid');
+                                $(`#${key}-feedback`).text(`${value}`);
                             }
                         }
                     }
-                });
+                }
             });
-        }
+        });
     }
 
     function excluirItem(url, item) {
