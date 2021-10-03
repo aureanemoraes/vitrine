@@ -49,7 +49,7 @@ aria-hidden="true"
                 <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
                     Fechar
                 </button>
-                <button type="submit" class="btn btn-primary">Salvar</button>
+                <button id="submit" type="submit" class="btn btn-primary">Salvar</button>
             </div>
         </form>
     </div>
