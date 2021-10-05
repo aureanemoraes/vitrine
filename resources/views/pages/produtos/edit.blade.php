@@ -204,7 +204,9 @@
 @section('js')
 <script>
      ClassicEditor
-        .create( document.querySelector( '.ckeditor' ) )
+        .create( document.querySelector( '.ckeditor' ), {
+            toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'table'],
+        } )
         .catch( error => {
             console.error( error );
         } );
